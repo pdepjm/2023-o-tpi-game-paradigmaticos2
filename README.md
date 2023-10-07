@@ -1,10 +1,12 @@
-# Nombre del juego (<- borrar y completar)
+# Nombre del juego Place holder TD
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Gael Roldan
+- Mariano Sebastian Lamaison
+- Fahim Wahid
+- Pablo Morosini
+- Rodrigo ....
 
 ## Capturas
 
@@ -12,7 +14,9 @@
 
 ## Reglas de Juego / Instrucciones
 
-(Escribirlas)
+Los enemigos llegaran desde un extremo del camino y se moveran a lo largo de este
+tienes N cantidad de enemigos que puedes dejar pasar. Cada enemigo eliminado generara dinero que puede 
+usarse para comprar torres y meoras para estas. Usa las teclas para seleccionar donde colocar tus torres.
 
 
 ## Otros
