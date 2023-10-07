@@ -1,8 +1,13 @@
 import wollok.game.*
-import pepita.*
+import example.*
 
-program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+program abc {
+	const matias = new Matias()
+	
+	//game.addVisual(celda)
+	game.addVisual(celdadir)
+	game.onCollideDo(celdadir, {obj => obj.direccion( celdadir.direccion() ) } )
+	game.onTick(2000, "moverEnemigo",  {matias.moverse()})
+	game.addVisual(matias)
 	game.start()
 }
