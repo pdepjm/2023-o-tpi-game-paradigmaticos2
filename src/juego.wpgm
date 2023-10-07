@@ -1,7 +1,11 @@
 import wollok.game.*
 import clases.*
-
-program abc {
+/*
+ * aqui es donde juntamos todo los que hicimos para correr el juego 
+ * por ahora solo tiene un codigo de prueba para ver que matias podia moverse
+ * el lunes chequeamos entre todos los que no estuvieron
+ */
+program testeoDelJuego {
 	const matias = new Matias()
 	
 	//game.addVisual(celda)
