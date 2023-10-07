@@ -6,7 +6,7 @@
 - Mariano Sebastian Lamaison
 - Fahim Wahid
 - Pablo Morosini
-- Rodrigo ....
+- Rodrigo Valentin Sarmiento
 
 ## Capturas
 
