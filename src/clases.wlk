@@ -28,3 +28,35 @@ object celda inherits Baldosa(image = "celda.png" , position = game.at(1,0)){
 object celdadir inherits BaldosaFlecha(image = "FlechaDerecha.png" , position = game.at(2,0), direcciones = [game.at(0,1)]){
 	
 }
+
+class Torre{
+	var property image
+	var property position
+}
+
+object TorreBasico inherits Torre(image = "pepita.png", position = game.center() ){
+	
+}
+
+object Cabezal{
+	var property direccion
+	var property image = "celda.png"
+	var property position = game.center() 
+	
+	method moverseHaciaArriba(){
+		self.position(position.up(1))
+	}
+	method moverseHaciaAbajo(){
+		self.position(position.down(1))
+	}
+	
+	method moverseHaciaIzquierda(){
+		self.position(position.left(1))
+	}
+	
+	method moverseHaciaDerecha(){
+		self.position(position.right(1))
+	}
+}
+
+
