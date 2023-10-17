@@ -34,11 +34,11 @@ class Torre{
 	var property position
 }
 
-object TorreBasico inherits Torre(image = "pepita.png", position = game.center() ){
+object torreBasico inherits Torre(image = "pepita.png", position = game.center() ){
 	
 }
 
-object Cabezal{
+object cabezal{
 	var property direccion
 	var property image = "celda.png"
 	var property position = game.center() 
