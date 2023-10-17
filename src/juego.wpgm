@@ -1,21 +1,24 @@
 import wollok.game.*
 import clases.*
+import objects.*
 /*
  * aqui es donde juntamos todo los que hicimos para correr el juego 
  * por ahora solo tiene un codigo de prueba para ver que matias podia moverse
  * el lunes chequeamos entre todos los que no estuvieron
  */
 program testeoDelJuego {
-    const matias = new Matias()
-
-    game.addVisual(celdadir)
-    //esto generea un mensaje de error cuando el cursor pasa encima de una baldosa flecha
-    //Ver definicion de problema N°1 explicaciones.txt
-    game.onCollideDo(celdadir, {obj => obj.direccion( celdadir.direccion() ) } )
-    game.onTick(2000, "moverEnemigo",  {matias.moverse()})
-    game.addVisual(matias)
-    game.addVisual(torreBasico)
+ 
     game.addVisual(cabezal)
+	
+	controlador.baldosas().forEach({baldosa => game.addVisual(baldosa)})
+	
+	const matias = new Matias()
+	game.addVisual(matias)
+	
+	game.onCollideDo( controlador.baldosas().get(1),{ enemigo => enemigo.direccion(controlador.baldosas().get(1).direccion())})
+	game.onCollideDo(controlador.baldosas().last(), {baldosaLlegada => controlador.reducirVida()
+		game.removeVisual(matias)})
+	game.onTick(2000, "moverMatias", {matias.moverse()})
 
     //Controles del cabezal
     keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )

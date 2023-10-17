@@ -1,3 +1,8 @@
+import objects.*
+import wollok.game.*
+import clases.*
+
+
 
 test "testX" {
 
