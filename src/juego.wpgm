@@ -6,18 +6,22 @@ import clases.*
  * el lunes chequeamos entre todos los que no estuvieron
  */
 program testeoDelJuego {
-	const matias = new Matias()
-	
-	//game.addVisual(celda)
-	game.addVisual(celdadir)
-	game.onCollideDo(celdadir, {obj => obj.direccion( celdadir.direccion() ) } )
-	game.onTick(2000, "moverEnemigo",  {matias.moverse()})
-	game.addVisual(matias)
-	game.addVisual(torreBasico)
-	game.addVisual(cabezal)
-	keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
-	keyboard.down().onPressDo( { cabezal.moverseHaciaAbajo() } )
-	keyboard.left().onPressDo( { cabezal.moverseHaciaIzquierda() } )
-	keyboard.right().onPressDo( { cabezal.moverseHaciaDerecha() } )
-	game.start()
+    const matias = new Matias()
+
+    game.addVisual(celdadir)
+    //esto generea un mensaje de error cuando el cursor pasa encima de una baldosa flecha
+    //Ver definicion de problema N°1 explicaciones.txt
+    game.onCollideDo(celdadir, {obj => obj.direccion( celdadir.direccion() ) } )
+    game.onTick(2000, "moverEnemigo",  {matias.moverse()})
+    game.addVisual(matias)
+    game.addVisual(torreBasico)
+    game.addVisual(cabezal)
+
+    //Controles del cabezal
+    keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
+    keyboard.down().onPressDo( { cabezal.moverseHaciaAbajo() } )
+    keyboard.left().onPressDo( { cabezal.moverseHaciaIzquierda() } )
+    keyboard.right().onPressDo( { cabezal.moverseHaciaDerecha() } )
+    keyboard.c().onPressDo( { cabezal.agregarTorre(controlador.torretas())})
+    game.start()
 }
