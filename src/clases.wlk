@@ -25,6 +25,10 @@ class Torre{
     var property position
 }
 
+class BaldosaLlegada inherits Baldosa {
+	
+	}
+
 object cabezal{
     var property image = "celda.png"
     var property position = game.center() 
@@ -54,6 +58,10 @@ object cabezal{
 object controlador {
     const property torretas = []
     const property enemigos = []
+    var property  vida = 3  
+      
+    
+    
 }
 
 class Matias inherits Enemigo(image = "matias.png" , position = game.at(0,0) , vida = 5){
