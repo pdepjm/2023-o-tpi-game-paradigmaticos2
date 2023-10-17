@@ -44,7 +44,7 @@ object cabezal{
         self.position(position.right(1))
     }
     method agregarTorre(listaTorres){
-        listaTorres.add(new Torre( image = "celda.png",position = self.position()))
+        listaTorres.add(new Torre( image = "torrePrueba.png",position = self.position()))
         game.addVisual(listaTorres.last())
     }
 }
