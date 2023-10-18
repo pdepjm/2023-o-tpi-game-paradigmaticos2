@@ -34,9 +34,10 @@ object controlador {
     const property baldosas = [ new Baldosa( position = game.at(0,0), image = "celda.png"), new BaldosaFlecha( position = game.at(1,0),
     	 image = "celda.png", direcciones= [game.at(0,1)] ) , new Baldosa( position = game.at(1,1), image = "celda.png"),
     	  new Baldosa( position = game.at(1,2), image = "celda.png")
-    ] // es el mapa?
+    ] 
     var property  vida = 3  
-  	method reducirVida() = vida - 1
+  	method reducirVida() {vida =  0.max(vida - 1) }
+  	method esFinDePartida() { if (vida == 0) game.say(cabezal, " Fin del juego" )}
 }
 
 object celda inherits Baldosa(image = "celda.png" , position = game.at(1,0)){

@@ -19,18 +19,16 @@ class Enemigo{
     method moverse(){
         position = game.at( position.x() + direccion.x() , position.y() + direccion.y() )
     }
+    method removerse(){
+    	game.removeVisual(self)
+    	controlador.enemigos().remove(self)
+    }
 }
 
 class Torre{
     var property image
     var property position
 }
-
-class BaldosaLlegada inherits Baldosa {
-	
-	}
-
-
 
 class Matias inherits Enemigo(image = "matias.png" , position = game.at(0,0) , vida = 5){
 

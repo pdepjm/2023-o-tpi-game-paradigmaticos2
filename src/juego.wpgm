@@ -15,10 +15,16 @@ program testeoDelJuego {
 	const matias = new Matias()
 	game.addVisual(matias)
 	
+	game.onTick(3000, "spawnerMatias", {controlador.enemigos().add(new Matias())
+		game.addVisual(controlador.enemigos().last())
+	})
+	
 	game.onCollideDo( controlador.baldosas().get(1),{ enemigo => enemigo.direccion(controlador.baldosas().get(1).direccion())})
-	game.onCollideDo(controlador.baldosas().last(), {baldosaLlegada => controlador.reducirVida()
-		game.removeVisual(matias)})
-	game.onTick(2000, "moverMatias", {matias.moverse()})
+	game.onCollideDo(controlador.baldosas().last(), {enemigo => controlador.reducirVida()
+		controlador.esFinDePartida()
+		enemigo.removerse()
+		})
+	game.onTick(2000, "moverMatias", {controlador.enemigos().forEach({enemigo => enemigo.moverse()})})
 
     //Controles del cabezal
     keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
