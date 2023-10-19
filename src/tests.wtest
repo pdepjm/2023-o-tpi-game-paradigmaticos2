@@ -1,6 +1,6 @@
-import objects.*
+import administrativo.*
 import wollok.game.*
-import clases.*
+import escenografiaJuego.*
 
 
 

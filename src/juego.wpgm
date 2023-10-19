@@ -1,21 +1,23 @@
 import wollok.game.*
-import clases.*
-import objects.*
+import administrativo.*
+import escenografiaJuego.*
 /*
  * aqui es donde juntamos todo los que hicimos para correr el juego 
- * por ahora solo tiene un codigo de prueba para ver que matias podia moverse
+ * por ahora solo tiene un codigo de prueba para ver que villano podia moverse
  * el lunes chequeamos entre todos los que no estuvieron
  */
 program testeoDelJuego {
  
+ 	game.height(15)
+ 	game.width(30)
     game.addVisual(cabezal)
 	
 	controlador.baldosas().forEach({baldosa => game.addVisual(baldosa)})
 	
-	const matias = new Matias()
-	game.addVisual(matias)
+	const villano = new Villano()
+	game.addVisual(villano)
 	
-	game.onTick(3000, "spawnerMatias", {controlador.enemigos().add(new Matias())
+	game.onTick(3000, "spawnerVillano", {controlador.enemigos().add(new Villano())
 		game.addVisual(controlador.enemigos().last())
 	})
 	
@@ -24,7 +26,7 @@ program testeoDelJuego {
 		controlador.revisarFinDePartida()
 		enemigo.removerse()
 		})
-	game.onTick(2000, "moverMatias", {controlador.enemigos().forEach({enemigo => enemigo.moverse()})})
+	game.onTick(2000, "moverVillano", {controlador.enemigos().forEach({enemigo => enemigo.moverse()})})
 
     //Controles del cabezal
     keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
