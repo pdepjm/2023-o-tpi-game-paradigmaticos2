@@ -21,7 +21,7 @@ program testeoDelJuego {
 	
 	game.onCollideDo( controlador.baldosas().get(1),{ enemigo => enemigo.direccion(controlador.baldosas().get(1).direccion())})
 	game.onCollideDo(controlador.baldosas().last(), {enemigo => controlador.reducirVida()
-		controlador.esFinDePartida()
+		controlador.revisarFinDePartida()
 		enemigo.removerse()
 		})
 	game.onTick(2000, "moverMatias", {controlador.enemigos().forEach({enemigo => enemigo.moverse()})})

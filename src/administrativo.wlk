@@ -1,6 +1,6 @@
-import wollok.game.*
-import clases.*
 
+import escenografiaJuego.*
+import wollok.game.*
 
 object cabezal{
     var property image = "celda.png"
@@ -35,16 +35,5 @@ object controlador {
     ] 
     var property  vida = 3  
   	method reducirVida() {vida =  0.max(vida - 1) }
-  	method esFinDePartida() { if (vida == 0) game.say(cabezal, " Fin del juego" )}
-}
-
-object celda inherits Baldosa(image = "celda.png" , position = game.at(1,0)){
-
-}
-object celdadir inherits BaldosaFlecha(image = "FlechaDerecha.png" , position = game.at(2,0), direcciones = [game.at(0,1)]){
-
-}
-
-object torreBasico inherits Torre(image = "pepita.png", position = game.center() ){
-
+  	method revisarFinDePartida() { if (vida == 0) game.say(cabezal, " Fin del juego" )}
 }

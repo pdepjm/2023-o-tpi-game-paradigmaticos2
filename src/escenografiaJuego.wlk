@@ -1,5 +1,7 @@
 import wollok.game.*
-import objects.*
+import administrativo.*
+
+
 class Baldosa{
     var property image
     var property position
@@ -30,6 +32,22 @@ class Torre{
     var property position
 }
 
-class Matias inherits Enemigo(direccion = game.at(1,0), image = "matias.png" , position = game.at(0,0) , vida = 5){
+
+class Villano inherits Enemigo(direccion = game.at(1,0), image = "matias.png" , position = game.at(0,0) , vida = 5){
 
 }
+
+
+//Traido del archivo de objects.wlk
+
+object celda inherits Baldosa(image = "celda.png" , position = game.at(1,0)){
+
+}
+object celdadir inherits BaldosaFlecha(image = "FlechaDerecha.png" , position = game.at(2,0), direcciones = [game.at(0,1)]){
+
+}
+
+object torreBasico inherits Torre(image = "pepita.png", position = game.center() ){
+
+}
+
