@@ -12,11 +12,9 @@ object cabezal{
     method moverseHaciaAbajo(){
         self.position(position.down(1))
     }
-
     method moverseHaciaIzquierda(){
         self.position(position.left(1))
     }
-
     method moverseHaciaDerecha(){
         self.position(position.right(1))
     }

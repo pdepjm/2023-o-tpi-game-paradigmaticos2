@@ -12,7 +12,7 @@ class BaldosaFlecha inherits Baldosa{//Baldosas que afectan la direccion de los 
 //var baldosa = new Baldosa( direcciones  = {game.at(0,1),game.at(1,0)} )
 
 class Enemigo{
-    var property direccion = game.at(1,0)
+    var property direccion
     var property image
     var property position
     var property vida
@@ -30,6 +30,6 @@ class Torre{
     var property position
 }
 
-class Matias inherits Enemigo(image = "matias.png" , position = game.at(0,0) , vida = 5){
+class Matias inherits Enemigo(direccion = game.at(1,0), image = "matias.png" , position = game.at(0,0) , vida = 5){
 
 }
