@@ -12,27 +12,11 @@ program testeoDelJuego {
  	game.width(30)
     game.addVisual(cabezal)
 	
-	controlador.baldosas().forEach({baldosa => game.addVisual(baldosa)})
-	
-	const villano = new Villano()
-	game.addVisual(villano)
-	
-	game.onTick(3000, "spawnerVillano", {controlador.enemigos().add(new Villano())
-		game.addVisual(controlador.enemigos().last())
-	})
-	
-	game.onCollideDo( controlador.baldosas().get(1),{ enemigo => enemigo.direccion(controlador.baldosas().get(1).direccion())})
-	game.onCollideDo(controlador.baldosas().last(), {enemigo => controlador.reducirVida()
-		controlador.revisarFinDePartida()
-		enemigo.removerse()
-		})
-	game.onTick(2000, "moverVillano", {controlador.enemigos().forEach({enemigo => enemigo.moverse()})})
-
     //Controles del cabezal
     keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
     keyboard.down().onPressDo( { cabezal.moverseHaciaAbajo() } )
     keyboard.left().onPressDo( { cabezal.moverseHaciaIzquierda() } )
     keyboard.right().onPressDo( { cabezal.moverseHaciaDerecha() } )
-    keyboard.c().onPressDo( { cabezal.agregarTorre(controlador.torretas())})
+    keyboard.c().onPressDo( { cabezal.colocarTorre() } )
     game.start()
 }

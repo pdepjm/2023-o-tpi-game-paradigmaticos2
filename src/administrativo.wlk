@@ -1,6 +1,7 @@
 
 import escenografiaJuego.*
 import wollok.game.*
+import wollok.game.*
 
 object cabezal{
     var property image = "celda.png"
@@ -18,22 +19,35 @@ object cabezal{
     method moverseHaciaDerecha(){
         self.position(position.right(1))
     }
-    method agregarTorre(listaTorres){
-        listaTorres.add(new Torre( image = "torrePrueba.png",position = self.position()))
-        game.addVisual(listaTorres.last())
-    }
+    method colocarTorre(){controlador.agregarTorre(new Vector(x=position.x(),y=position.y()))}
+    
+    //method hayUnaTorrePresente() = //devolvera true si en la lista de torres existe una que tenga la misma posicion que el cabezal 
 }
 
-//objeto que contiene las dos listas que usaremos en el juego 
-//ir a explicacion N°2 explicaciones.txt
+//El controlador se encarga de todo el tema de poner y sacar objetos los demas objetos solo le pediran que lo haga por ellos 
 object controlador {
-    const property torretas = []
-    const property enemigos = []
-    const property baldosas = [ new Baldosa( position = game.at(0,0), image = "celda.png"), new BaldosaFlecha( position = game.at(1,0),
-    	 image = "celda.png", direcciones= [game.at(0,1)] ) , new Baldosa( position = game.at(1,1), image = "celda.png"),
-    	  new Baldosa( position = game.at(1,2), image = "celda.png")
-    ] 
-    var property  vida = 3  
-  	method reducirVida() {vida =  0.max(vida - 1) }
-  	method revisarFinDePartida() { if (vida == 0) game.say(cabezal, " Fin del juego" )}
+	//no hay razon para que otros objetos puedan tocar las listas a si que las dejamos sin property
+    const torres = []
+    const enemigos = []
+    
+    var property  vidaDelJugador = 3  
+  	method reducirVida() {vidaDelJugador =  0.max(vidaDelJugador - 1) }
+  	method revisarFinDePartida() { if (vidaDelJugador == 0) game.say(cabezal, " Fin del juego" )}
+  	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, direccion = new Vector(x=0,y=0), image = imagen_, posicion = posicion_)
+  	method agregarEnemigo(vida_,imagen_,posicion_){ 
+  		const enemigo = self.instanciarEnemigo(vida_, imagen_, posicion_)
+  		enemigos.add(enemigo)
+  		game.addVisual(enemigo)
+  	}
+  	method instancearTorre(posicion_) = new Torre(objetivo = null, image = "torrePrueba.png", posicion = posicion_)
+  	method agregarTorre(posicion_){
+    	const torre = self.instancearTorre(posicion_)
+        torres.add( torre )
+        game.addVisual( torre )
+    }
+    method retirarEnemigo(enemigo){ 
+    	game.removeVisual(enemigo) 
+    	enemigos.remove(enemigo)
+    }
+    
 }
