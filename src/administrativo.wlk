@@ -49,5 +49,7 @@ object controlador {
     	game.removeVisual(enemigo) 
     	enemigos.remove(enemigo)
     }
-    
+    method construirCamino(direccionSiguienteCamino_,direccionPropia_,posicion_){
+    	
+    }
 }

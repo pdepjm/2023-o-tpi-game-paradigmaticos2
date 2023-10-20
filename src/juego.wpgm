@@ -12,6 +12,8 @@ program testeoDelJuego {
  	game.width(30)
     game.addVisual(cabezal)
 	
+	
+	
     //Controles del cabezal
     keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
     keyboard.down().onPressDo( { cabezal.moverseHaciaAbajo() } )
