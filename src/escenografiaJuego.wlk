@@ -19,7 +19,10 @@ class Vector{//los metodos agregados existen para mover objetos y determinar pos
 	method distanciaManhattan(punto) = self.vectorHaciaPunto(punto).x().abs() + self.vectorHaciaPunto(punto).y().abs()
 	method vectorAPosition() = game.at( x , y)
 	method vector(x_,y_) { x = x_  y = y_}
+	method iguales(punto) = punto.x() == x and punto.y() == y
 }
+
+const vectorNulo = new Vector( x=0, y=0)
 class ObjetoDeJuego{//clase creada para ahorrar repetir 
 	var property image
 	var posicion 
@@ -34,22 +37,44 @@ class Camino{
 	const direccionescaminosAdyacentes
 	const direccionPropia
 	const posicion
-	const largoDelCamino
+	const property largoDelCamino
 	const property baldosas = []
 	method construirCamino(){
 		(largoDelCamino-1).times({
-			i => baldosas.add(self.crearBaldosa(posicion.sumarYMultiplicar(direccionPropia,i-1),direccionPropia))
+			i => baldosas.add(self.crearBaldosa(posicion.sumarYMultiplicar(direccionPropia,i-1),[direccionPropia]))
 		})
-		baldosas.add(self.crearBaldosa(posicion.sumarYMultiplicar(direccionPropia,largoDelCamino),direccionescaminosAdyacentes))
+		baldosas.add(self.crearBaldosa(posicion.sumarYMultiplicar(direccionPropia,largoDelCamino-1),direccionescaminosAdyacentes))
+		baldosas.forEach({baldosa => game.addVisual(baldosa)})
 	}
 	method crearBaldosa(posicion_,direcciones_)=new BaldosaFlecha(direcciones = direcciones_, image = "celda.png", posicion = posicion_)
+	method darDireccion(baldosa_) = baldosas.get(baldosa_).direccion()
+	method esMiPosicion(posicion_) = posicion.iguales(posicion_)
 }
 
 class Enemigo inherits ObjetoDeJuego{
     var vida
-    var direccion
-    method moverse() { posicion = posicion.sumar(direccion)}
+    var pasosDados = 0
+    var camino
+    method solicitarDireccion() = camino.darDireccion(pasosDados)
+    method moverse() {
+    	const direccion = self.solicitarDireccion()
+    	if (direccion.iguales(vectorNulo)) {self.morir()}
+    	else {
+    		posicion = posicion.sumar(direccion)
+    	
+    		if (pasosDados == camino.largoDelCamino()-1) {self.solicitarCamino()}
+    		pasosDados = pasosDados + 1
+    	}
+    	
+    	  
+    	
+    }
     method reducirVida(){ vida = vida - 1}
+    method solicitarCamino() {camino = controlador.asignarCamino(posicion) pasosDados = 0}
+    method morir(){
+    	controlador.reducirVida()
+    	controlador.retirarEnemigo(self)
+    }
 }
 
 class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche regreso por mas
@@ -58,7 +83,7 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
 }
 
 //previamente conocido como Matias
-class Villano inherits Enemigo(direccion = new Vector(x=1,y=0), image = "matias.png" , posicion = new Vector(x = 0, y = 0) , vida = 5){
+class Villano inherits Enemigo(image = "matias.png" , posicion = new Vector(x = 0, y = 0) , vida = 5){
 
 }
 

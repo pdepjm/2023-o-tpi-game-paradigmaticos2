@@ -29,11 +29,12 @@ object controlador {
 	//no hay razon para que otros objetos puedan tocar las listas a si que las dejamos sin property
     const torres = []
     const enemigos = []
+    const listaDeCaminos = []
     
     var property  vidaDelJugador = 3  
   	method reducirVida() {vidaDelJugador =  0.max(vidaDelJugador - 1) }
   	method revisarFinDePartida() { if (vidaDelJugador == 0) game.say(cabezal, " Fin del juego" )}
-  	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, direccion = new Vector(x=0,y=0), image = imagen_, posicion = posicion_)
+  	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, image = imagen_, posicion = posicion_, camino = self.asignarCamino(posicion_))
   	method agregarEnemigo(vida_,imagen_,posicion_){ 
   		const enemigo = self.instanciarEnemigo(vida_, imagen_, posicion_)
   		enemigos.add(enemigo)
@@ -49,7 +50,12 @@ object controlador {
     	game.removeVisual(enemigo) 
     	enemigos.remove(enemigo)
     }
-    method construirCamino(direccionSiguienteCamino_,direccionPropia_,posicion_){
-    	
+    method moverEnemigos(){enemigos.forEach({enemigo => enemigo.moverse()})}
+    method agregarCamino(direccionesSiguientesCaminos_,direccionPropia_,posicion_,largo_){
+    	const camino_ = new Camino(direccionescaminosAdyacentes = direccionesSiguientesCaminos_, direccionPropia = direccionPropia_, posicion = posicion_, largoDelCamino = largo_)
+    	camino_.construirCamino()
+    	listaDeCaminos.add(camino_)
     }
+    method vector(x_,y_) = new Vector(x=x_,y=y_)
+    method asignarCamino(posicion) = listaDeCaminos.find({camino => camino.esMiPosicion(posicion)}) 
 }
