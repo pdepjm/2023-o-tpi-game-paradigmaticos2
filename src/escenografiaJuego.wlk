@@ -9,7 +9,7 @@ class Vector{//los metodos agregados existen para mover objetos y determinar pos
 	
 	//MATEMATICAS :D!!!!!
 	method sumar(vector) = new Vector(x = vector.x() + self.x() , y = vector.y() + self.y()) 
-	method vectorHaciaPunto(punto) = new Vector( x = punto.x() + self.x(), y = punto.y() + self.y())
+	method vectorHaciaPunto(punto) = new Vector( x = punto.x() - self.x(), y = punto.y() - self.y())
 	method multiplicar(factor) = new Vector( x = x * factor , y = y * factor)
 	method sumarVectorEscalado(vector, factor) = self.sumar(vector.multiplicar(factor))
 	method vectorEstaInclinado(vector) = self.vectorHaciaPunto(vector).x().abs() < self.vectorHaciaPunto(vector).y().abs()
