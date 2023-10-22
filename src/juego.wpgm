@@ -15,7 +15,8 @@ program testeoDelJuego {
 	controlador.agregarCamino([controlador.vector(0,1)],controlador.vector(1,0),controlador.vector(0,5),5)
 	controlador.agregarCamino([controlador.vector(-1,0)],controlador.vector(0,1),controlador.vector(4,6),4)
 	controlador.agregarCamino([controlador.vector(0,-1)],controlador.vector(-1,0),controlador.vector(3,9),1)
-	controlador.agregarCamino([vectorNulo],controlador.vector(0,-1),controlador.vector(3,8),7)
+	controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,-1),controlador.vector(3,8),7)
+	controlador.agregarCamino([vectorNulo],controlador.vector(1,0),controlador.vector(4,2),4)
 	
 	game.onTick(3000,"spawner", {controlador.agregarEnemigo(5, "matias.png", controlador.vector(0,5))})
 	game.onTick(500,"moverEnemigos",{controlador.moverEnemigos()})

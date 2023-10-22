@@ -4,12 +4,14 @@ import administrativo.*
 
 class Vector{//los metodos agregados existen para mover objetos y determinar posiciones relativas
 //de objetos esto servira para poder hacer que las torretas "roten" a futuro
-	var property x
-	var property y
+	var x
+	var y
 	
+	method x() = x
+	method y() = y
 	//MATEMATICAS :D!!!!!
-	method sumar(vector) = new Vector(x = vector.x() + self.x() , y = vector.y() + self.y()) 
-	method vectorHaciaPunto(punto) = new Vector( x = punto.x() - self.x(), y = punto.y() - self.y())
+	method sumar(vector) = new Vector(x = vector.x() + x , y = vector.y() + y) 
+	method vectorHaciaPunto(punto) = new Vector( x = punto.x() - x, y = punto.y() - y)
 	method multiplicar(factor) = new Vector( x = x * factor , y = y * factor)
 	method sumarVectorEscalado(vector, factor) = self.sumar(vector.multiplicar(factor))
 	method vectorEstaInclinado(vector) = self.vectorHaciaPunto(vector).x().abs() < self.vectorHaciaPunto(vector).y().abs()
@@ -36,25 +38,6 @@ class BaldosaFlecha inherits ObjetoDeJuego{//Baldosas que afectan la direccion d
     method direccion() = direcciones.anyOne()
 }//nota baldosas no deberia eredar dado que podemos hacer que se asigne una imagen en base a su lista de direcciones
 
-class Camino{
-	const direccionescaminosAdyacentes
-	const direccionPropia
-	const posicion
-	const property largoDelCamino
-	const property baldosas = []
-	
-	method esMiPosicion(posicion_) = posicion.iguales(posicion_)
-	method darDireccion(baldosa_) = baldosas.get(baldosa_).direccion()
-	method crearBaldosa(posicion_,direcciones_)=new BaldosaFlecha(direcciones = direcciones_, image = "celda.png", posicion = posicion_)
-	method construirCamino(){
-		(largoDelCamino-1).times({
-			i => baldosas.add(self.crearBaldosa(posicion.sumarVectorEscalado(direccionPropia,i-1),[direccionPropia]))
-		})
-		baldosas.add(self.crearBaldosa(posicion.sumarVectorEscalado(direccionPropia,largoDelCamino-1),direccionescaminosAdyacentes))
-		baldosas.forEach({baldosa => game.addVisual(baldosa)})
-	}
-}
-
 class Enemigo inherits ObjetoDeJuego{
     var vida
     var pasosDados = 1 //decimos que si esta en una casilla ya dio un paso 
@@ -68,15 +51,15 @@ class Enemigo inherits ObjetoDeJuego{
     method moverse() {
     	const direccion = self.solicitarDireccion()
     	if (direccion.iguales(vectorNulo)) {self.morir()}
-    	else {
+    	else 
+    	{
     		posicion = posicion.sumar(direccion)
     		pasosDados = pasosDados + 1
-    		if (pasosDados > camino.largoDelCamino()) 
+    		if (pasosDados > camino.size()) 
     		{
     			self.solicitarCamino() 
     			pasosDados = 1
     		}
-    		
     	}
     }
     method reducirVida(){ vida = vida - 1}

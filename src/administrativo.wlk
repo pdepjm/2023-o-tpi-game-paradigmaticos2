@@ -3,6 +3,23 @@ import escenografiaJuego.*
 import wollok.game.*
 import wollok.game.*
 
+class Camino inherits List{//decimos que un camino es una lista de baldosas no que tiene una lista de estas
+	const direccionescaminosAdyacentes
+	const direccionPropia
+	const posicion
+	
+	method esMiPosicion(posicion_) = posicion.iguales(posicion_)
+	method darDireccion(baldosa_) = self.get(baldosa_).direccion()
+	method crearBaldosa(posicion_,direcciones_)=new BaldosaFlecha(direcciones = direcciones_, image = "celda.png", posicion = posicion_)
+	method construirCamino(largoDelCamino){
+		(largoDelCamino-1).times({
+			i => self.add(self.crearBaldosa(posicion.sumarVectorEscalado(direccionPropia,i-1),[direccionPropia]))
+		})
+		self.add(self.crearBaldosa(posicion.sumarVectorEscalado(direccionPropia,largoDelCamino-1),direccionescaminosAdyacentes))
+		self.forEach({baldosa => game.addVisual(baldosa)})
+	}
+}
+
 object cabezal{
     var property image = "celda.png"
     var property position = game.center() 
@@ -53,8 +70,8 @@ object controlador {
         game.addVisual( torre )
     }
     method agregarCamino(direccionesSiguientesCaminos_,direccionPropia_,posicion_,largo_){
-    	const camino_ = new Camino(direccionescaminosAdyacentes = direccionesSiguientesCaminos_, direccionPropia = direccionPropia_, posicion = posicion_, largoDelCamino = largo_)
-    	camino_.construirCamino()
+    	const camino_ = new Camino(direccionescaminosAdyacentes = direccionesSiguientesCaminos_, direccionPropia = direccionPropia_, posicion = posicion_)
+    	camino_.construirCamino(largo_)
     	listaDeCaminos.add(camino_)
     }
     method vector(x_,y_) = new Vector(x=x_,y=y_)
