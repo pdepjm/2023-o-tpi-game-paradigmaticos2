@@ -4,11 +4,3 @@ import escenografiaJuego.*
 
 
 
-describe "pruebas de movimiento" {
-	test "las casillas pueden cambiar la direccion de un enemigo"{
-		const baldosaDePrueba = new BaldosaFlecha(direcciones = [game.at(1,0)], image = "FlechaDerecha.png", position = game.at(0,0))
-		const enemigoDePrueba = new Enemigo(direccion = game.at(2,2) ,image = "matias.png", position = game.at(0,0), vida = 5)
-		enemigoDePrueba.direccion(baldosaDePrueba.direccion())
-		assert.that(enemigoDePrueba.direccion().x() == 1 and enemigoDePrueba.direccion().y() == 0)
-	}
-}

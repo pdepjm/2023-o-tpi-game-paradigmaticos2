@@ -1,6 +1,24 @@
 
 import escenografiaJuego.*
 import wollok.game.*
+import wollok.game.*
+
+class Camino inherits List{//decimos que un camino es una lista de baldosas no que tiene una lista de estas
+	const direccionescaminosAdyacentes
+	const direccionPropia
+	const posicion
+	
+	method esMiPosicion(posicion_) = posicion.iguales(posicion_)
+	method darDireccion(baldosa_) = self.get(baldosa_).direccion()
+	method crearBaldosa(posicion_,direcciones_)=new BaldosaFlecha(direcciones = direcciones_, image = "celda.png", posicion = posicion_)
+	method construirCamino(largoDelCamino){
+		(largoDelCamino-1).times({
+			i => self.add(self.crearBaldosa(posicion.sumarVectorEscalado(direccionPropia,i-1),[direccionPropia]))
+		})
+		self.add(self.crearBaldosa(posicion.sumarVectorEscalado(direccionPropia,largoDelCamino-1),direccionescaminosAdyacentes))
+		self.forEach({baldosa => game.addVisual(baldosa)})
+	}
+}
 
 object cabezal{
     var property image = "celda.png"
@@ -18,22 +36,43 @@ object cabezal{
     method moverseHaciaDerecha(){
         self.position(position.right(1))
     }
-    method agregarTorre(listaTorres){
-        listaTorres.add(new Torre( image = "torrePrueba.png",position = self.position()))
-        game.addVisual(listaTorres.last())
-    }
+    method colocarTorre(){controlador.agregarTorre(new Vector(x=position.x(),y=position.y()))}
+    
+    //method hayUnaTorrePresente() = //devolvera true si en la lista de torres existe una que tenga la misma posicion que el cabezal 
 }
 
-//objeto que contiene las dos listas que usaremos en el juego 
-//ir a explicacion N°2 explicaciones.txt
+//El controlador se encarga de todo el tema de poner y sacar objetos los demas objetos solo le pediran que lo haga por ellos 
 object controlador {
-    const property torretas = []
-    const property enemigos = []
-    const property baldosas = [ new Baldosa( position = game.at(0,0), image = "celda.png"), new BaldosaFlecha( position = game.at(1,0),
-    	 image = "celda.png", direcciones= [game.at(0,1)] ) , new Baldosa( position = game.at(1,1), image = "celda.png"),
-    	  new Baldosa( position = game.at(1,2), image = "celda.png")
-    ] 
-    var property  vida = 3  
-  	method reducirVida() {vida =  0.max(vida - 1) }
-  	method revisarFinDePartida() { if (vida == 0) game.say(cabezal, " Fin del juego" )}
+	//no hay razon para que otros objetos puedan tocar las listas a si que las dejamos sin property
+    const torres = []
+    const enemigos = []
+    const listaDeCaminos = []
+    var vidaDelJugador = 3
+      
+  	method reducirVida() {vidaDelJugador =  0.max(vidaDelJugador - 1) }
+  	method revisarFinDePartida() { if (vidaDelJugador == 0) game.say(cabezal, " Fin del juego" )}
+  	method asignarCamino(posicion) = listaDeCaminos.find({camino => camino.esMiPosicion(posicion)})
+  	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, image = imagen_, posicion = posicion_, camino = self.asignarCamino(posicion_))
+  	method agregarEnemigo(vida_,imagen_,posicion_){ 
+  		const enemigo = self.instanciarEnemigo(vida_, imagen_, posicion_)
+  		enemigos.add(enemigo)
+  		game.addVisual(enemigo)
+  	}
+  	method retirarEnemigo(enemigo){ 
+    	game.removeVisual(enemigo) 
+    	enemigos.remove(enemigo)
+    }
+    method moverEnemigos(){enemigos.forEach({enemigo => enemigo.moverse()})}
+  	method instancearTorre(posicion_) = new Torre(objetivo = null, image = "torrePrueba.png", posicion = posicion_)
+  	method agregarTorre(posicion_){
+    	const torre = self.instancearTorre(posicion_)
+        torres.add( torre )
+        game.addVisual( torre )
+    }
+    method agregarCamino(direccionesSiguientesCaminos_,direccionPropia_,posicion_,largo_){
+    	const camino_ = new Camino(direccionescaminosAdyacentes = direccionesSiguientesCaminos_, direccionPropia = direccionPropia_, posicion = posicion_)
+    	camino_.construirCamino(largo_)
+    	listaDeCaminos.add(camino_)
+    }
+    method vector(x_,y_) = new Vector(x=x_,y=y_)
 }
