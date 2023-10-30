@@ -49,7 +49,10 @@ object controlador {
     const listaDeCaminos = []
     var vidaDelJugador = 3
       
-  	method reducirVida() {vidaDelJugador =  0.max(vidaDelJugador - 1) }
+//  var property debeDispararDerecha = initialValue
+	
+	method abranFuego() { torres.forEach{torre => torre.disparar()} }
+	method reducirVida() {vidaDelJugador =  0.max(vidaDelJugador - 1) }
   	method revisarFinDePartida() { if (vidaDelJugador == 0) game.say(cabezal, " Fin del juego" )}
   	method asignarCamino(posicion) = listaDeCaminos.find({camino => camino.esMiPosicion(posicion)})
   	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, image = imagen_, posicion = posicion_, camino = self.asignarCamino(posicion_))
@@ -63,7 +66,7 @@ object controlador {
     	enemigos.remove(enemigo)
     }
     method moverEnemigos(){enemigos.forEach({enemigo => enemigo.moverse()})}
-  	method instancearTorre(posicion_) = new Torre(objetivo = null, image = "torrePrueba.png", posicion = posicion_)
+  	method instancearTorre(posicion_) = new Torre(objetivo = null, proyectil = new Proyectil(image = "ball.png", posicion = posicion_), image = "torrePrueba.png", posicion = posicion_, disparaArriba = true, disparaAbajo = false, disparaIzquierda = true, disparaDerecha = false)
   	method agregarTorre(posicion_){
     	const torre = self.instancearTorre(posicion_)
         torres.add( torre )
@@ -75,4 +78,14 @@ object controlador {
     	listaDeCaminos.add(camino_)
     }
     method vector(x_,y_) = new Vector(x=x_,y=y_)
+    
+
+    method debeDispararArriba(vector) = return enemigos.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() > vector.y()}
+  	method debeDispararAbajo(vector) = return enemigos.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() < vector.y()}
+	method debeDispararIzquierda(vector) = return enemigos.any{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() > vector.y()}
+	method debeDispararDerecha(vector) = return enemigos.fany{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() < vector.y()}
 }
+
+
+
+

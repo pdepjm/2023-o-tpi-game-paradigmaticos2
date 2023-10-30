@@ -9,6 +9,13 @@ class Vector{//los metodos agregados existen para mover objetos y determinar pos
 	
 	method x() = x
 	method y() = y
+	
+	method up(){ y =+ 1 }
+	method down(){ y =- 1 }
+	method right(){ x =+ 1 }
+	method left(){ x =- 1 }
+	
+	method devolverVector() = new Vector(x = x, y = y)
 	//MATEMATICAS :D!!!!!
 	method sumar(vector) = new Vector(x = vector.x() + x , y = vector.y() + y) 
 	method vectorHaciaPunto(punto) = new Vector( x = punto.x() - x, y = punto.y() - y)
@@ -67,7 +74,56 @@ class Enemigo inherits ObjetoDeJuego{
 
 class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche regreso por mas
     var objetivo
+    var proyectil
+    
+    var disparaArriba
+    var disparaAbajo
+    var disparaIzquierda
+    var disparaDerecha
+    
+    method disparar(){
+    	if(disparaArriba){
+    		controlador.debeDispararArriba(posicion)
+    		proyectil = new Proyectil(image = "ball.png", posicion = posicion.devolverVector())
+    		proyectil.dispararArriba()
+    	}
+    	if(disparaAbajo){
+    		controlador.debeDispararAbajo(posicion)
+    		proyectil = new Proyectil(image = "ball.png", posicion = posicion.devolverVector())
+    		proyectil.dispararAbajo()
+    	}
+    	if(disparaIzquierda and controlador.debeDispararIzquierda(posicion)){
+    		
+    		proyectil = new Proyectil(image = "ball.png", posicion = posicion.devolverVector())
+    		proyectil.dispararIzquierda()
+    	}
+    	if(disparaDerecha){
+    		controlador.debeDispararDerecha(posicion)
+    		proyectil = new Proyectil(image = "ball.png", posicion = posicion.devolverVector())
+    		proyectil.dispararDerecha()
+    	}
+    }
     method objetivo(nuevoOvjetivo){ objetivo = nuevoOvjetivo }
+}
+
+class Proyectil inherits ObjetoDeJuego{
+	
+	method dispararArriba(){
+		game.onTick(2000, "moverArriba", {posicion.up()})
+		game.addVisual(self)
+	}
+	method dispararAbajo(){ 
+		game.onTick(2000, "moverAbajo", {posicion.down()})
+		game.addVisual(self)
+	}
+	method dispararIzquierda(){ 
+		game.onTick(2000, "moverIzquirda", {posicion.left()})
+		game.addVisual(self)
+	}
+	method dispararDerecha(){ 
+		game.onTick(2000, "moverDerecha", {posicion.right()})
+		game.addVisual(self)
+	}
 }
 
 //previamente conocido como Matias

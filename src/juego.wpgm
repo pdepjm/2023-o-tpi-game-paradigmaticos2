@@ -20,6 +20,7 @@ program testeoDelJuego {
 	
 	game.onTick(3000,"spawner", {controlador.agregarEnemigo(5, "matias.png", controlador.vector(0,5))})
 	game.onTick(500,"moverEnemigos",{controlador.moverEnemigos()})
+	game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
     //Controles del cabezal
     keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
     keyboard.down().onPressDo( { cabezal.moverseHaciaAbajo() } )
