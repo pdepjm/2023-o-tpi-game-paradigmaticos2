@@ -37,6 +37,12 @@ class Vector{//los metodos agregados existen para mover objetos y determinar pos
 		}
 		return ""
 	}
+	method productoPunto(vectorA) = vectorA.x()*self.x() + vectorA.y()*self.y()
+	method cuadradoDistancia() = self.productoPunto(self)
+	method productoCruz(vectorA) = vectorA.x()*self.y() - self.x()*vectorA.y()
+	method esSubVectorDe(vector){
+		return self.productoPunto(vector) > 0 and self.cuadradoDistancia()  <= vector.cuadradoDistancia() and self.productoCruz(vector) == 0
+	}
 }
 
 const vectorNulo = new Vector( x=0, y=0)
