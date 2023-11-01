@@ -6,10 +6,11 @@ import escenografiaJuego.*
  * por ahora solo tiene un codigo de prueba para ver que villano podia moverse
  * el lunes chequeamos entre todos los que no estuvieron
  */
+ 
 program testeoDelJuego {
  
- 	game.height(15)
- 	game.width(30)
+ 	game.height(10)
+ 	game.width(20)
     game.addVisual(cabezal)
 	
 	controlador.agregarCamino([controlador.vector(0,1)],controlador.vector(1,0),controlador.vector(0,5),5)
@@ -18,14 +19,17 @@ program testeoDelJuego {
 	controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,-1),controlador.vector(3,8),7)
 	controlador.agregarCamino([vectorNulo],controlador.vector(1,0),controlador.vector(4,2),4)
 	
-	game.onTick(3000,"spawner", {controlador.agregarEnemigo(5, "matias.png", controlador.vector(0,5))})
-	game.onTick(500,"moverEnemigos",{controlador.moverEnemigos()})
+	//game.onTick(3000,"spawner", {controlador.agregarEnemigo(5, "matias.png", controlador.vector(0,5))})
+	controlador.agregarSpawner(300, controlador.vector(0,5), 5)
+	game.onTick(100,"moverObjetos",{controlador.moverObjetos()})
 	game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
+	
     //Controles del cabezal
     keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
     keyboard.down().onPressDo( { cabezal.moverseHaciaAbajo() } )
     keyboard.left().onPressDo( { cabezal.moverseHaciaIzquierda() } )
     keyboard.right().onPressDo( { cabezal.moverseHaciaDerecha() } )
     keyboard.c().onPressDo( { cabezal.colocarTorre() } )
+    
     game.start()
 }

@@ -74,33 +74,40 @@ class Enemigo inherits ObjetoDeJuego{
 
 class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche regreso por mas
     var objetivo
-    var proyectil
+    //var proyectil
     
+    var contador = 1//para asegurar que no disare en el instante que es creada
     var disparaArriba
     var disparaAbajo
     var disparaIzquierda
     var disparaDerecha
     
-    method disparar(){
+    method cargarBala(){
+    	var direccion 
     	if(disparaArriba){
-    		controlador.debeDispararArriba(posicion)
-    		proyectil = new Proyectil(image = "ball.png", posicion = posicion.devolverVector())
-    		proyectil.dispararArriba()
+    		direccion = new Vector(x=0,y=1)
+    		controlador.agregarPoryectil(posicion, direccion)
     	}
-    	if(disparaAbajo){
-    		controlador.debeDispararAbajo(posicion)
-    		proyectil = new Proyectil(image = "ball.png", posicion = posicion.devolverVector())
-    		proyectil.dispararAbajo()
+    	else if(disparaAbajo){
+    		direccion = new Vector(x=0,y=-1)
+    		controlador.agregarPoryectil(posicion, direccion)
     	}
-    	if(disparaIzquierda and controlador.debeDispararIzquierda(posicion)){
-    		
-    		proyectil = new Proyectil(image = "ball.png", posicion = posicion.devolverVector())
-    		proyectil.dispararIzquierda()
+    	else if(disparaIzquierda){
+    		direccion = new Vector(x=1,y=0)
+    		controlador.agregarPoryectil(posicion, direccion)
     	}
-    	if(disparaDerecha){
-    		controlador.debeDispararDerecha(posicion)
-    		proyectil = new Proyectil(image = "ball.png", posicion = posicion.devolverVector())
-    		proyectil.dispararDerecha()
+    	else if(disparaDerecha){
+    		direccion = new Vector(x=-1,y=0)
+    		controlador.agregarPoryectil(posicion, direccion)
+    	}
+    	
+    }
+    method disparar(){
+    	if ( contador <= 0 ){
+    		self.cargarBala()
+    		contador = 2
+    	}else{
+    		contador -= 1
     	}
     }
     method objetivo(nuevoOvjetivo){ objetivo = nuevoOvjetivo }
@@ -108,21 +115,17 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
 
 class Proyectil inherits ObjetoDeJuego{
 	
-	method dispararArriba(){
-		game.onTick(2000, "moverArriba", {posicion.up()})
-		game.addVisual(self)
+	var direccion
+	var pasosDados = 12
+	
+	method mover(){
+		posicion = posicion.sumar(direccion)
 	}
-	method dispararAbajo(){ 
-		game.onTick(2000, "moverAbajo", {posicion.down()})
-		game.addVisual(self)
-	}
-	method dispararIzquierda(){ 
-		game.onTick(2000, "moverIzquirda", {posicion.left()})
-		game.addVisual(self)
-	}
-	method dispararDerecha(){ 
-		game.onTick(2000, "moverDerecha", {posicion.right()})
-		game.addVisual(self)
+	method destruir(){controlador.removerProjectil(self)}
+	method moverse(){
+		self.mover()
+		pasosDados -= 1
+		if ( pasosDados == 0 ) {self.destruir()}
 	}
 }
 
@@ -130,4 +133,3 @@ class Proyectil inherits ObjetoDeJuego{
 class Villano inherits Enemigo(image = "matias.png" , posicion = new Vector(x = 0, y = 0) , vida = 5){
 
 }
-
