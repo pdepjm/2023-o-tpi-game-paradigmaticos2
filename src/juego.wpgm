@@ -23,7 +23,7 @@ program testeoDelJuego {
 	
 	//game.onTick(3000,"spawner", {controlador.agregarEnemigo(5, "matias.png", controlador.vector(0,5))})
 	
-	controlador.agregarSpawner(3000, controlador.vector(0,5), 5)
+	controlador.agregarSpawner(3000, controlador.vector(0,7), 5)
 	game.onTick(1000,"moverObjetos",{controlador.moverObjetos()})
 	game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
 	//hariamos un shcelude en el 
