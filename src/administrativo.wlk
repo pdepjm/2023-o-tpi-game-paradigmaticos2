@@ -21,9 +21,11 @@ class Camino inherits List{//decimos que un camino es una lista de baldosas no q
 }
 
 object cabezal{
-    var property image = "celda.png"
+    var property image = "cabezal.png"
     var property position = game.center() 
-
+	var direccionTorre = new Vector( x =0, y= 1 )
+	
+	
     method moverseHaciaArriba(){
         self.position(position.up(1))
     }
@@ -36,7 +38,10 @@ object cabezal{
     method moverseHaciaDerecha(){
         self.position(position.right(1))
     }
-    method colocarTorre(){controlador.agregarTorre(new Vector(x=position.x(),y=position.y()))}
+    
+    method girarTorreSentidoAntiHorario(){ direccionTorre = direccionTorre.rotar90grados() }
+    method girarTorreSentidoHorario(){ direccionTorre = direccionTorre.rotar90grados().multiplicar(-1) }
+    method colocarTorre(){controlador.agregarTorre(new Vector(x=position.x(),y=position.y()),direccionTorre)}
     
     //method hayUnaTorrePresente() = //devolvera true si en la lista de torres existe una que tenga la misma posicion que el cabezal 
 }
@@ -48,9 +53,7 @@ object controlador {
     const objetosMobibles = []
     const listaDeCaminos = []
     var numeroDeSpawners = 0
-    var vidaDelJugador = 1
-    
-      
+    var vidaDelJugador = 300
 //  var property debeDispararDerecha = initialValue
 	
 	method abranFuego() { torres.forEach{torre => torre.disparar()} }
@@ -106,9 +109,9 @@ object controlador {
     //method moverBalas(){objetosMobibles.forEach({bala => bala.mover()})}
     //method disparar(){torres.forEach({torre => torre.disparar()})}
     //cambiar esto luego ( en caso de la alternativa sea aceptada ) 
-  	method instancearTorre(posicion_) = new Torre(objetivo = null, image = "torrePrueba.png", posicion = posicion_, disparaArriba = true, disparaAbajo = false, disparaIzquierda = false, disparaDerecha = false)
-  	method agregarTorre(posicion_){
-    	const torre = self.instancearTorre(posicion_)
+  	method instancearTorre(posicion_,direccion_) = new Torre(objetivo = null, image = "torrePrueba.png", posicion = posicion_,direccion = direccion_)
+  	method agregarTorre(posicion_,direccion_){
+    	const torre = self.instancearTorre(posicion_,direccion_)
         torres.add( torre )
         game.addVisual( torre )
     }
@@ -124,9 +127,9 @@ object controlador {
 	method debeDispararIzquierda(vector) = objetosMobibles.any{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() > vector.y()}
 	method debeDispararDerecha(vector) = objetosMobibles.fany{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() < vector.y()}
 	
-	method instanciarProyectil(posicion_,direccion_) = new Proyectil(direccion = direccion_, image = "FlechaDerecha.png", posicion = posicion_)
-	method agregarPoryectil(posicion_,direccion_){
-		const proyectil = self.instanciarProyectil(posicion_, direccion_)
+	method instanciarProyectil(posicion_,direccion_,imagen_) = new Proyectil(direccion = direccion_, image = imagen_, posicion = posicion_)
+	method agregarPoryectil(posicion_,direccion_,imagen_){
+		const proyectil = self.instanciarProyectil(posicion_, direccion_,imagen_)
 		objetosMobibles.add(proyectil)
 		game.addVisual(proyectil)
 	}
@@ -135,6 +138,3 @@ object controlador {
 		objetosMobibles.remove(projectil)
 	}
 }
-
-
-
