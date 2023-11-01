@@ -45,6 +45,7 @@ class ObjetoDeJuego{//clase creada para ahorrar repetir
 	var property image
 	var posicion //es un vector no un game.at()
 	method position() = posicion.vectorAPosition()
+	method impactar(bala) {}
 }
 
 class BaldosaFlecha inherits ObjetoDeJuego{//Baldosas que afectan la direccion de los enemigos
@@ -59,12 +60,14 @@ class Enemigo inherits ObjetoDeJuego{
     method solicitarDireccion() = camino.darDireccion(pasosDados-1)//tiene que ser -1 por que accedemos a una lista con esta funcion
     method solicitarCamino() {camino = controlador.asignarCamino(posicion)}
     method morir(){
-    	controlador.reducirVida()
     	controlador.retirarEnemigo(self)
     }
     method moverse() {
     	const direccion = self.solicitarDireccion()
-    	if (direccion.iguales(vectorNulo)) {self.morir()}
+    	if (direccion.iguales(vectorNulo)) {
+    		controlador.reducirVida()
+    		self.morir()
+    	}
     	else 
     	{
     		posicion = posicion.sumar(direccion)
@@ -76,7 +79,12 @@ class Enemigo inherits ObjetoDeJuego{
     		}
     	}
     }
-    method reducirVida(){ vida = vida - 1}
+    
+    override method impactar(bala) {
+    	vida = vida - 1
+    	if(vida == 0) self.morir()
+    	bala.destruir()
+    }
 }
 
 class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche regreso por mas

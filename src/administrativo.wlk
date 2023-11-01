@@ -25,7 +25,7 @@ object cabezal{
     var property position = game.center() 
 	var direccionTorre = new Vector( x =0, y= 1 )
 	
-	
+	method impactar(bala){}
     method moverseHaciaArriba(){
         self.position(position.up(1))
     }
@@ -50,7 +50,8 @@ object cabezal{
 object controlador {
 	//no hay razon para que otros objetos puedan tocar las listas a si que las dejamos sin property
     const torres = []
-    const objetosMobibles = []
+    const enemigos = []
+    const proyectiles = []
     const listaDeCaminos = []
     var numeroDeSpawners = 0
     var vidaDelJugador = 300
@@ -65,7 +66,8 @@ object controlador {
 	}
   	method limpiarPantalla() {
   		game.clear()//eliminamos todo de la pantalla
-  		objetosMobibles.clear()
+  		enemigos.clear()
+  		proyectiles.clear()
   		torres.clear()
   		listaDeCaminos.clear()
   	}
@@ -97,16 +99,16 @@ object controlador {
   	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, image = imagen_, posicion = posicion_, camino = self.asignarCamino(posicion_))
   	method agregarEnemigo(vida_,imagen_,posicion_){ 
   		const enemigo = self.instanciarEnemigo(vida_, imagen_, posicion_)
-  		objetosMobibles.add(enemigo)
+  		enemigos.add(enemigo)
   		game.addVisual(enemigo)
   	}
   	method retirarEnemigo(enemigo){ 
     	game.removeVisual(enemigo) 
-    	objetosMobibles.remove(enemigo)
+    	enemigos.remove(enemigo)
     	self.reducirVida()
     }
-    method moverObjetos(){objetosMobibles.forEach({enemigo => enemigo.moverse()})}
-    //method moverBalas(){objetosMobibles.forEach({bala => bala.mover()})}
+    method moverEnemigos(){enemigos.forEach({enemigo => enemigo.moverse()})}
+    method moverBalas(){proyectiles.forEach({bala => bala.mover()})}
     //method disparar(){torres.forEach({torre => torre.disparar()})}
     //cambiar esto luego ( en caso de la alternativa sea aceptada ) 
   	method instancearTorre(posicion_,direccion_) = new Torre(objetivo = null, image = "torrePrueba.png", posicion = posicion_,direccion = direccion_)
@@ -122,19 +124,20 @@ object controlador {
     }
     method vector(x_,y_) = new Vector(x=x_,y=y_)
     
-    method debeDispararArriba(vector) = objetosMobibles.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() > vector.y()}
-  	method debeDispararAbajo(vector) = objetosMobibles.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() < vector.y()}
-	method debeDispararIzquierda(vector) = objetosMobibles.any{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() > vector.y()}
-	method debeDispararDerecha(vector) = objetosMobibles.fany{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() < vector.y()}
+    method debeDispararArriba(vector) = enemigos.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() > vector.y()}
+  	method debeDispararAbajo(vector) = enemigos.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() < vector.y()}
+	method debeDispararIzquierda(vector) = enemigos.any{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() > vector.y()}
+	method debeDispararDerecha(vector) = enemigos.fany{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() < vector.y()}
 	
 	method instanciarProyectil(posicion_,direccion_,imagen_) = new Proyectil(direccion = direccion_, image = imagen_, posicion = posicion_)
 	method agregarPoryectil(posicion_,direccion_,imagen_){
 		const proyectil = self.instanciarProyectil(posicion_, direccion_,imagen_)
-		objetosMobibles.add(proyectil)
+		proyectiles.add(proyectil)
 		game.addVisual(proyectil)
+		game.onCollideDo(proyectil, {enemigo => enemigo.impactar(proyectil)})
 	}
 	method removerProjectil(projectil){
 		game.removeVisual(projectil)
-		objetosMobibles.remove(projectil)
+		proyectiles.remove(projectil)
 	}
 }

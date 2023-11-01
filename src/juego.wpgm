@@ -9,7 +9,7 @@ import escenografiaJuego.*
  
 program testeoDelJuego {
  
- 	game.height(10)
+ 	game.height(15)
  	game.width(20)
     game.addVisual(cabezal)
 	
@@ -23,8 +23,11 @@ program testeoDelJuego {
 	
 	//game.onTick(3000,"spawner", {controlador.agregarEnemigo(5, "matias.png", controlador.vector(0,5))})
 	
-	controlador.agregarSpawner(3000, controlador.vector(0,7), 5)
-	game.onTick(1000,"moverObjetos",{controlador.moverObjetos()})
+	game.ground("tierraRoja.png")
+	
+	controlador.agregarSpawner(3000, controlador.vector(0,7), 3)
+	game.onTick(1000,"moverObjetos",{controlador.moverEnemigos()})
+	game.onTick(250,"moverObjetos",{controlador.moverBalas()})
 	game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
 	//hariamos un shcelude en el 
     //Controles del cabezal
