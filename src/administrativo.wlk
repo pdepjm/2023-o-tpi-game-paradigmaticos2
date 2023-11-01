@@ -18,6 +18,11 @@ class Camino inherits List{//decimos que un camino es una lista de baldosas no q
 		self.add(self.crearBaldosa(posicion.sumarVectorEscalado(direccionPropia,largoDelCamino-1),direccionescaminosAdyacentes))
 		self.forEach({baldosa => game.addVisual(baldosa)})
 	}
+	method estaEnElCamino(punto){
+		const vectorDistancia = posicion.vectorHaciaPunto(punto)
+		const vectorLongitud = direccionPropia.multiplicar(self.size()-1)
+		return vectorDistancia.esSubVectorDe(vectorLongitud)
+	}
 }
 
 object cabezal{
@@ -41,8 +46,11 @@ object cabezal{
     
     method girarTorreSentidoAntiHorario(){ direccionTorre = direccionTorre.rotar90grados() }
     method girarTorreSentidoHorario(){ direccionTorre = direccionTorre.rotar90grados().multiplicar(-1) }
-    method colocarTorre(){controlador.agregarTorre(new Vector(x=position.x(),y=position.y()),direccionTorre)}
-    
+    method colocarTorre(){
+    	if (controlador.estaEnUnCamino(position).negate()){
+    		controlador.agregarTorre(new Vector(x=position.x(),y=position.y()),direccionTorre)
+    	}
+    }
     //method hayUnaTorrePresente() = //devolvera true si en la lista de torres existe una que tenga la misma posicion que el cabezal 
 }
 
@@ -123,7 +131,7 @@ object controlador {
     	listaDeCaminos.add(camino_)
     }
     method vector(x_,y_) = new Vector(x=x_,y=y_)
-    
+    method estaEnUnCamino(posicion) = listaDeCaminos.any({camino => camino.estaEnElCamino(posicion)})
     method debeDispararArriba(vector) = enemigos.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() > vector.y()}
   	method debeDispararAbajo(vector) = enemigos.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() < vector.y()}
 	method debeDispararIzquierda(vector) = enemigos.any{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() > vector.y()}
