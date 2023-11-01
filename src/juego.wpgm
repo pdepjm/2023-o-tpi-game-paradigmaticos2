@@ -13,11 +13,13 @@ program testeoDelJuego {
  	game.width(20)
     game.addVisual(cabezal)
 	
-	controlador.agregarCamino([controlador.vector(0,1)],controlador.vector(1,0),controlador.vector(0,5),5)
-	controlador.agregarCamino([controlador.vector(-1,0)],controlador.vector(0,1),controlador.vector(4,6),4)
-	controlador.agregarCamino([controlador.vector(0,-1)],controlador.vector(-1,0),controlador.vector(3,9),1)
-	controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,-1),controlador.vector(3,8),7)
-	controlador.agregarCamino([vectorNulo],controlador.vector(1,0),controlador.vector(4,2),4)
+	controlador.agregarCamino([controlador.vector(0,1)],controlador.vector(1,0),controlador.vector(0,7),5)
+	controlador.agregarCamino([controlador.vector(0,-1)],controlador.vector(0,1),controlador.vector(5,7),6)
+	controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(1,0),controlador.vector(6,12),3)
+	controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,-1),controlador.vector(8,11),9)
+	controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(1,0),controlador.vector(9,3),4)
+	controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,1),controlador.vector(13,3),8)
+	controlador.agregarCamino([vectorNulo],controlador.vector(1,0),controlador.vector(14,10),5)
 	
 	//game.onTick(3000,"spawner", {controlador.agregarEnemigo(5, "matias.png", controlador.vector(0,5))})
 	
