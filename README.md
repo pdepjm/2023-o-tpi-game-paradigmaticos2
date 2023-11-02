@@ -12,11 +12,17 @@
 
 (agregar)
 
-## 📕Reglas de Juego / Instrucciones
-
+## 📕Reglas de Juego
 Los enemigos llegaran desde un extremo del camino y se moveran a lo largo de este, se
 tienes N cantidad de enemigos que puedes dejar pasar. Cada enemigo eliminado generara dinero que puede 
 usarse para comprar torres y mejoras para estas. Usa las teclas para seleccionar donde colocar tus torres.
+
+## 🕹 INSTRUCCIONES:
+Flecha arriba - Flecha derecha - Flecha izquierda - Flecha abajo : Mover torre
+
+C - Colocar torre
+
+X - Girar torre
 
 
 ## ➡ Otros ⬅
