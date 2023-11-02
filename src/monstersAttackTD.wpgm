@@ -11,9 +11,10 @@ program testeoDelJuego {
  
  	game.height(15)
  	game.width(20)
+ 	game.ground("tierraRoja.png")
 	
 	keyboard.enter().onPressDo( {
-		game.ground("tierraRoja.png")
+		
 		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(1,0),controlador.vector(0,7),5)
 		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,1),controlador.vector(5,7),6)
 		controlador.agregarCamino([controlador.vector(0,-1)],controlador.vector(1,0),controlador.vector(6,12),3)
@@ -22,14 +23,13 @@ program testeoDelJuego {
 		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,1),controlador.vector(13,3),8)
 		controlador.agregarCamino([vectorNulo],controlador.vector(1,0),controlador.vector(14,10),5)
 		
-		//game.onTick(3000,"spawner", {controlador.agregarEnemigo(5, "matias.png", controlador.vector(0,5))})
-		
-		game.ground("tierraRoja.png")
+
 		
 		controlador.agregarSpawner(3000, controlador.vector(0,7), 3)
-		game.onTick(1000,"moverObjetos",{controlador.moverEnemigos()})
+		game.onTick(800,"moverObjetos",{controlador.moverEnemigos()})
 		game.onTick(250,"moverObjetos",{controlador.moverBalas()})
 		game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
+		game.schedule(60000, {controlador.finDePartida()})
 		//hariamos un shcelude en el 
 	    //Controles del cabezal
 	    keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )

@@ -90,7 +90,7 @@ object controlador {
     const proyectiles = []
     const listaDeCaminos = []
     var numeroDeSpawners = 0
-    var vidaDelJugador = 300
+    var vidaDelJugador = 3
 //  var property debeDispararDerecha = initialValue
 	
 	
@@ -118,9 +118,12 @@ object controlador {
   				self.limpiarPantalla()
   				//cambiaremos por la pantalla de fin
   				if ( vidaDelJugador == 0 ){//En caso de perder
+  				
+  					game.addVisual(new ObjetoDeJuego(posicion = self.vector(10,7) , image = "perdiste.png" )) 
   					
   				}else {//en caso de ganar
-  					
+  				
+  					game.addVisual(new ObjetoDeJuego(posicion = self.vector(10,7) , image = "ganaste.png" )) 	
   				}
   			}
   		)//retiramos todo objeto de la pantalla
