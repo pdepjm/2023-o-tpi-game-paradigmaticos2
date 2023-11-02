@@ -22,7 +22,7 @@ Flecha arriba - Flecha derecha - Flecha izquierda - Flecha abajo : Mover torre
 
 C - Colocar torre
 
-X - Girar torre
+X / Z - Girar torre
 
 
 ## ➡ Otros ⬅
