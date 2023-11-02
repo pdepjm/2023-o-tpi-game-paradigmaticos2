@@ -21,7 +21,7 @@ class Camino inherits List{//decimos que un camino es una lista de baldosas no q
 	method estaEnElCamino(punto){
 		const vectorDistancia = posicion.vectorHaciaPunto(punto)
 		const vectorLongitud = direccionPropia.multiplicar(self.size()-1)
-		return vectorDistancia.esSubVectorDe(vectorLongitud)
+		return vectorDistancia.esSubVectorDe(vectorLongitud) or posicion.iguales(punto)
 	}
 }
 
@@ -29,46 +29,57 @@ object cabezal{
     var property image = "cabezalArriba.png"
     var property position = game.center() 
 	var direccionTorre = new Vector( x =0, y= 1 )
+	var estaRedireccionandoTorre = false
 	
 	method impactar(bala){}
     method moverseHaciaArriba(){
-    	if ( position.y() < game.height() - 1 ){
+    	if ( position.y() < game.height() - 1 and estaRedireccionandoTorre.negate()){
     		self.position(position.up(1))
     	}
-        
     }
     method moverseHaciaAbajo(){
-    	if ( position.y() > 0 ){
+    	if ( position.y() > 0 and estaRedireccionandoTorre.negate()){
     		self.position(position.down(1))
     	}
     }
     method moverseHaciaIzquierda(){
-    	if ( position.x() > 0 ){
+    	if ( position.x() > 0 and estaRedireccionandoTorre.negate()){
     		self.position(position.left(1))
     	}
-        
     }
     method moverseHaciaDerecha(){
-    	if ( position.x() < game.width() - 1){
+    	if ( position.x() < game.width() - 1 and estaRedireccionandoTorre.negate()){
     		self.position(position.right(1))
     	}
-        
+    }
+    
+    method estoyEncimaDeUnaTorre() = controlador.posicionDeTorreExistente(self.posAVector())
+    method cambiarEstado() { estaRedireccionandoTorre = estaRedireccionandoTorre.negate() }
+    method redireccionarTorre() {
+    	controlador.darTorre(self.posAVector()).direccion(direccionTorre)
     }
     
     method girarTorreSentidoAntiHorario(){ 
     	direccionTorre = direccionTorre.rotar90grados()
     	image = "cabezal"+direccionTorre.vectorAString()+".png"
+    	if ( estaRedireccionandoTorre ){
+    		self.redireccionarTorre()
+    	}
     }
     method posAVector() = new Vector(x=position.x(),y=position.y())
     method girarTorreSentidoHorario(){ 
     	direccionTorre = direccionTorre.rotar90grados().multiplicar(-1)
     	image = "cabezal"+direccionTorre.vectorAString()+".png"
+    	if ( estaRedireccionandoTorre ){
+    		self.redireccionarTorre()
+    	}
     }
     method colocarTorre(){
     	if (controlador.estaEnUnCamino(position).negate() and controlador.posicionDeTorreExistente(self.posAVector()).negate()){
     		controlador.agregarTorre(new Vector(x=position.x(),y=position.y()),direccionTorre)
     	}
-    } 
+    }
+    
 }
 
 //El controlador se encarga de todo el tema de poner y sacar objetos los demas objetos solo le pediran que lo haga por ellos 
@@ -82,6 +93,8 @@ object controlador {
     var vidaDelJugador = 300
 //  var property debeDispararDerecha = initialValue
 	
+	
+	method darTorre(posicion_){ return torres.find({torre => torre.esMiPosicion(posicion_)})}
 	method abranFuego() { torres.forEach{torre => torre.disparar()} }
 	method reducirVida() {
 		vidaDelJugador -= 1

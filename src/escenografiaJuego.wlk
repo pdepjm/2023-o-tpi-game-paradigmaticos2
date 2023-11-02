@@ -101,6 +101,10 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
     var contador = 1//para asegurar que no disare en el instante que es creada
     var direccion 
     
+    method direccion( direccion_) {
+    	direccion = direccion_
+    }
+    
     override method image() = "torre"+direccion.vectorAString()+".png" 
     
     method cargarBala(){

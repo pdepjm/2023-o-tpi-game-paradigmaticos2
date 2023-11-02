@@ -38,6 +38,11 @@ program testeoDelJuego {
     keyboard.c().onPressDo( { cabezal.colocarTorre() } )
     keyboard.z().onPressDo( { cabezal.girarTorreSentidoAntiHorario()} )
     keyboard.x().onPressDo( { cabezal.girarTorreSentidoHorario()} )
+    keyboard.r().onPressDo( { 
+    	if ( cabezal.estoyEncimaDeUnaTorre() ){
+    		cabezal.cambiarEstado()
+    		}
+    	})
     game.addVisual(cabezal)
     game.start()
 }
