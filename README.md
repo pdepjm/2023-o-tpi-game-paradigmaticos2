@@ -9,8 +9,12 @@
 - Sarmiento Rodrigo Valentin 
 
 ## 📸 Capturas
+![inicio](https://github.com/pdepjm/2023-o-tpi-game-paradigmaticos2/assets/98661381/62b12003-5b83-45b9-b4cb-2e67f447da23)
 
-(agregar)
+![OIG](https://github.com/pdepjm/2023-o-tpi-game-paradigmaticos2/assets/98661381/625d62f5-fb56-49e1-a8ba-b097abe5944d)
+
+![_99cd4ad6-5350-4220-9ff3-4d58ada72adf](https://github.com/pdepjm/2023-o-tpi-game-paradigmaticos2/assets/98661381/c9772c4d-f2d2-49d6-ad5c-b1cf22e4ec4e)
+
 
 ## 📕Reglas de Juego
 Los enemigos llegaran desde un extremo del camino y se moveran a lo largo de este, se
