@@ -63,6 +63,7 @@ class Enemigo inherits ObjetoDeJuego{
     var vida
     var pasosDados = 1 //decimos que si esta en una casilla ya dio un paso 
     var camino
+    method pasosDados() = pasosDados
     method solicitarDireccion() = camino.darDireccion(pasosDados-1)//tiene que ser -1 por que accedemos a una lista con esta funcion
     method solicitarCamino() {camino = controlador.asignarCamino(posicion)}
     method morir(){

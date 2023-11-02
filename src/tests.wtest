@@ -3,4 +3,30 @@ import wollok.game.*
 import escenografiaJuego.*
 
 
-
+describe "Test de Movimiento de Baldosas"{
+	
+	method moverEnemigo(enemigo,camino){
+		camino.construirCamino(5)
+		enemigo.moverse()
+		return enemigo.position()
+	}
+	method incrementarPasosDados(enemigo,camino){
+		camino.construirCamino(5)
+		enemigo.moverse()
+		return enemigo.pasosDados()
+	}
+	
+	test "el enemigo se movio para adelante"{
+		const camino_ = new Camino(direccionescaminosAdyacentes = [controlador.vector(1,0)], direccionPropia =controlador.vector(1,0), posicion = controlador.vector(0,0))
+		const enemigo = new Enemigo(vida = 10, camino = camino_, image = "", posicion = controlador.vector(0,0))
+		
+		assert.equals(game.at(1,0), self.moverEnemigo(enemigo,camino_) )
+	}
+	test "se incrementaron los pasos dados"{
+		const camino_ = new Camino(direccionescaminosAdyacentes = [controlador.vector(1,0)], direccionPropia =controlador.vector(1,0), posicion = controlador.vector(0,0))
+		const enemigo = new Enemigo(vida = 10, camino = camino_, image = "", posicion = controlador.vector(0,0))
+		assert.equals(2, self.incrementarPasosDados(enemigo,camino_))
+	}
+	
+}
+  
