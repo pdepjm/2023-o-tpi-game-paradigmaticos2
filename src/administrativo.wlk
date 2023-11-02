@@ -26,32 +26,49 @@ class Camino inherits List{//decimos que un camino es una lista de baldosas no q
 }
 
 object cabezal{
-    var property image = "cabezal.png"
+    var property image = "cabezalArriba.png"
     var property position = game.center() 
 	var direccionTorre = new Vector( x =0, y= 1 )
 	
 	method impactar(bala){}
     method moverseHaciaArriba(){
-        self.position(position.up(1))
+    	if ( position.y() < game.height() - 1 ){
+    		self.position(position.up(1))
+    	}
+        
     }
     method moverseHaciaAbajo(){
-        self.position(position.down(1))
-    }
-    method moverseHaciaIzquierda(){
-        self.position(position.left(1))
-    }
-    method moverseHaciaDerecha(){
-        self.position(position.right(1))
-    }
-    
-    method girarTorreSentidoAntiHorario(){ direccionTorre = direccionTorre.rotar90grados() }
-    method girarTorreSentidoHorario(){ direccionTorre = direccionTorre.rotar90grados().multiplicar(-1) }
-    method colocarTorre(){
-    	if (controlador.estaEnUnCamino(position).negate()){
-    		controlador.agregarTorre(new Vector(x=position.x(),y=position.y()),direccionTorre)
+    	if ( position.y() > 0 ){
+    		self.position(position.down(1))
     	}
     }
-    //method hayUnaTorrePresente() = //devolvera true si en la lista de torres existe una que tenga la misma posicion que el cabezal 
+    method moverseHaciaIzquierda(){
+    	if ( position.x() > 0 ){
+    		self.position(position.left(1))
+    	}
+        
+    }
+    method moverseHaciaDerecha(){
+    	if ( position.x() < game.width() - 1){
+    		self.position(position.right(1))
+    	}
+        
+    }
+    
+    method girarTorreSentidoAntiHorario(){ 
+    	direccionTorre = direccionTorre.rotar90grados()
+    	image = "cabezal"+direccionTorre.vectorAString()+".png"
+    }
+    method posAVector() = new Vector(x=position.x(),y=position.y())
+    method girarTorreSentidoHorario(){ 
+    	direccionTorre = direccionTorre.rotar90grados().multiplicar(-1)
+    	image = "cabezal"+direccionTorre.vectorAString()+".png"
+    }
+    method colocarTorre(){
+    	if (controlador.estaEnUnCamino(position).negate() and controlador.posicionDeTorreExistente(self.posAVector()).negate()){
+    		controlador.agregarTorre(new Vector(x=position.x(),y=position.y()),direccionTorre)
+    	}
+    } 
 }
 
 //El controlador se encarga de todo el tema de poner y sacar objetos los demas objetos solo le pediran que lo haga por ellos 
@@ -92,17 +109,13 @@ object controlador {
   				}else {//en caso de ganar
   					
   				}
-  				
   			}
   		)//retiramos todo objeto de la pantalla
   	}
   	method agregarSpawner(tiempo , posicion , vida){
   		numeroDeSpawners += 1
-  		game.onTick(tiempo, "spawner numero " + numeroDeSpawners.toString() , {self.agregarEnemigo(vida, "matias.png", posicion)})
-  		
+  		game.onTick(tiempo, "spawner numero " + numeroDeSpawners.toString() , {self.agregarEnemigo(vida, "matias.png", posicion)})	
   	}
-  	
-  	
   	method asignarCamino(posicion) = listaDeCaminos.find({camino => camino.esMiPosicion(posicion)})
   	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, image = imagen_, posicion = posicion_, camino = self.asignarCamino(posicion_))
   	method agregarEnemigo(vida_,imagen_,posicion_){ 
@@ -110,15 +123,13 @@ object controlador {
   		enemigos.add(enemigo)
   		game.addVisual(enemigo)
   	}
-  	method retirarEnemigo(enemigo){ 
-    	game.removeVisual(enemigo) 
+  	method retirarEnemigo(enemigo){
+    	game.removeVisual(enemigo)
     	enemigos.remove(enemigo)
     	self.reducirVida()
     }
     method moverEnemigos(){enemigos.forEach({enemigo => enemigo.moverse()})}
-    method moverBalas(){proyectiles.forEach({bala => bala.mover()})}
-    //method disparar(){torres.forEach({torre => torre.disparar()})}
-    //cambiar esto luego ( en caso de la alternativa sea aceptada ) 
+    method moverBalas(){proyectiles.forEach({bala => bala.moverse()})} 
   	method instancearTorre(posicion_,direccion_) = new Torre(objetivo = null, image = "torrePrueba.png", posicion = posicion_,direccion = direccion_)
   	method agregarTorre(posicion_,direccion_){
     	const torre = self.instancearTorre(posicion_,direccion_)
@@ -130,6 +141,9 @@ object controlador {
     	camino_.construirCamino(largo_)
     	listaDeCaminos.add(camino_)
     }
+    
+    method posicionDeTorreExistente(posicion_) = torres.any({torre => torre.esMiPosicion(posicion_)})
+    
     method vector(x_,y_) = new Vector(x=x_,y=y_)
     method estaEnUnCamino(posicion) = listaDeCaminos.any({camino => camino.estaEnElCamino(posicion)})
     method debeDispararArriba(vector) = enemigos.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() > vector.y()}

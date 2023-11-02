@@ -11,7 +11,7 @@ program testeoDelJuego {
  
  	game.height(15)
  	game.width(20)
-    game.addVisual(cabezal)
+    
 	
 	controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(1,0),controlador.vector(0,7),5)
 	controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,1),controlador.vector(5,7),6)
@@ -38,6 +38,6 @@ program testeoDelJuego {
     keyboard.c().onPressDo( { cabezal.colocarTorre() } )
     keyboard.z().onPressDo( { cabezal.girarTorreSentidoAntiHorario()} )
     keyboard.x().onPressDo( { cabezal.girarTorreSentidoHorario()} )
-    
+    game.addVisual(cabezal)
     game.start()
 }

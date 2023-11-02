@@ -37,9 +37,9 @@ class Vector{//los metodos agregados existen para mover objetos y determinar pos
 		}
 		return ""
 	}
-	method productoPunto(vectorA) = vectorA.x()*self.x() + vectorA.y()*self.y()
+	method productoPunto(vector) = vector.x()*self.x() + vector.y()*self.y()
 	method cuadradoDistancia() = self.productoPunto(self)
-	method productoCruz(vectorA) = vectorA.x()*self.y() - self.x()*vectorA.y()
+	method productoCruz(vector) = vector.x()*self.y() - self.x()*vector.y()
 	method esSubVectorDe(vector){
 		return self.productoPunto(vector) > 0 and self.cuadradoDistancia()  <= vector.cuadradoDistancia() and self.productoCruz(vector) == 0
 	}
@@ -104,9 +104,7 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
     override method image() = "torre"+direccion.vectorAString()+".png" 
     
     method cargarBala(){
-    	if ( direccion != vectorNulo ){
-    		controlador.agregarPoryectil(posicion, direccion,"ball.png")
-    	}
+    	controlador.agregarPoryectil(posicion.sumar(direccion), direccion,"ball.png")
     }
     method disparar(){
     	if ( contador <= 0 ){
@@ -117,12 +115,13 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
     	}
     }
     method objetivo(nuevoOvjetivo){ objetivo = nuevoOvjetivo }
+    method esMiPosicion(posicion_) = posicion.iguales(posicion_)
 }
 
 class Proyectil inherits ObjetoDeJuego{
 	
 	var direccion
-	var pasosDados = 12
+	var pasosDados = 4
 	
 	method mover(){
 		posicion = posicion.sumar(direccion)
@@ -131,7 +130,9 @@ class Proyectil inherits ObjetoDeJuego{
 	method moverse(){
 		self.mover()
 		pasosDados -= 1
-		if ( pasosDados == 0 ) {self.destruir()}
+		if ( pasosDados == 0 ){
+			self.destruir()
+		}
 	}
 }
 
