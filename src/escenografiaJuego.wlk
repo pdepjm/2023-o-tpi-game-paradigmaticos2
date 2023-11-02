@@ -2,13 +2,8 @@ import wollok.game.*
 import administrativo.*
 
 
-class Vector{//los metodos agregados existen para mover objetos y determinar posiciones relativas
+class Vector inherits Position {//los metodos agregados existen para mover objetos y determinar posiciones relativas
 //de objetos esto servira para poder hacer que las torretas "roten" a futuro
-	var x
-	var y
-	
-	method x() = x
-	method y() = y
 	
 	method devolverVector() = new Vector(x = x, y = y)
 	//MATEMATICAS :D!!!!!
@@ -22,7 +17,6 @@ class Vector{//los metodos agregados existen para mover objetos y determinar pos
 	method puntoEstaDerecha(vector) = self.vectorEstaInclinado(vector).negate() and self.vectorHaciaPunto(vector).x() > 0
 	method puntoEstaIzquierda(vector) = self.vectorEstaInclinado(vector).negate() and self.vectorHaciaPunto(vector).x() < 0
 	method distanciaManhattan(punto) = self.vectorHaciaPunto(punto).x().abs() + self.vectorHaciaPunto(punto).y().abs()
-	method vectorAPosition() = game.at( x , y)
 	method rotar90grados() = new Vector(x= -y, y= x)
 	method iguales(punto) = punto.x() == x and punto.y() == y
 	method vectorAString(){
@@ -49,8 +43,8 @@ const vectorNulo = new Vector( x=0, y=0)
 
 class ObjetoDeJuego{//clase creada para ahorrar repetir 
 	var property image
-	var posicion //es un vector no un game.at()
-	method position() = posicion.vectorAPosition()
+	var posicion 
+	method position() = posicion
 	method impactar(bala) {}
 }
 

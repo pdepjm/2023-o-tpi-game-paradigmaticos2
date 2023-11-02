@@ -117,7 +117,7 @@ object controlador {
   			{ 
   				self.limpiarPantalla()
   				//cambiaremos por la pantalla de fin
-  				if ( vidaDelJugador == 0 ){//En caso de perder
+  				if ( vidaDelJugador <= 0 ){//En caso de perder
   				
   					game.addVisual(new ObjetoDeJuego(posicion = self.vector(10,7) , image = "perdiste.png" )) 
   					
@@ -162,10 +162,7 @@ object controlador {
     
     method vector(x_,y_) = new Vector(x=x_,y=y_)
     method estaEnUnCamino(posicion) = listaDeCaminos.any({camino => camino.estaEnElCamino(posicion)})
-    method debeDispararArriba(vector) = enemigos.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() > vector.y()}
-  	method debeDispararAbajo(vector) = enemigos.any{enemigo => enemigo.position().x() == vector.x() and enemigo.position().y() < vector.y()}
-	method debeDispararIzquierda(vector) = enemigos.any{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() > vector.y()}
-	method debeDispararDerecha(vector) = enemigos.fany{enemigo => enemigo.position().x() == vector.y() and enemigo.position().y() < vector.y()}
+ 
 	
 	method instanciarProyectil(posicion_,direccion_,imagen_) = new Proyectil(direccion = direccion_, image = imagen_, posicion = posicion_)
 	method agregarPoryectil(posicion_,direccion_,imagen_){
