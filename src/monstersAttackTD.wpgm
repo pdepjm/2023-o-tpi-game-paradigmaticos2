@@ -1,0 +1,52 @@
+import wollok.game.*
+import administrativo.*
+import escenografiaJuego.*
+/*
+ * aqui es donde juntamos todo los que hicimos para correr el juego 
+ * por ahora solo tiene un codigo de prueba para ver que villano podia moverse
+ * el lunes chequeamos entre todos los que no estuvieron
+ */
+ 
+program testeoDelJuego {
+ 
+ 	game.height(15)
+ 	game.width(20)
+	
+	keyboard.enter().onPressDo( {
+		game.ground("tierraRoja.png")
+		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(1,0),controlador.vector(0,7),5)
+		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,1),controlador.vector(5,7),6)
+		controlador.agregarCamino([controlador.vector(0,-1)],controlador.vector(1,0),controlador.vector(6,12),3)
+		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,-1),controlador.vector(8,11),9)
+		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(1,0),controlador.vector(9,3),4)
+		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,1),controlador.vector(13,3),8)
+		controlador.agregarCamino([vectorNulo],controlador.vector(1,0),controlador.vector(14,10),5)
+		
+		//game.onTick(3000,"spawner", {controlador.agregarEnemigo(5, "matias.png", controlador.vector(0,5))})
+		
+		game.ground("tierraRoja.png")
+		
+		controlador.agregarSpawner(3000, controlador.vector(0,7), 3)
+		game.onTick(1000,"moverObjetos",{controlador.moverEnemigos()})
+		game.onTick(250,"moverObjetos",{controlador.moverBalas()})
+		game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
+		//hariamos un shcelude en el 
+	    //Controles del cabezal
+	    keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
+	    keyboard.down().onPressDo( { cabezal.moverseHaciaAbajo() } )
+	    keyboard.left().onPressDo( { cabezal.moverseHaciaIzquierda() } )
+	    keyboard.right().onPressDo( { cabezal.moverseHaciaDerecha() } )
+	    keyboard.c().onPressDo( { cabezal.colocarTorre() } )
+	    keyboard.z().onPressDo( { cabezal.girarTorreSentidoAntiHorario()} )
+	    keyboard.x().onPressDo( { cabezal.girarTorreSentidoHorario()} )
+	    keyboard.r().onPressDo( { 
+	    	if ( cabezal.estoyEncimaDeUnaTorre() ){
+	    		cabezal.cambiarEstado()
+	    		}
+	    	})
+	    game.addVisual(cabezal)
+		
+	} )
+	
+    game.start()
+}
