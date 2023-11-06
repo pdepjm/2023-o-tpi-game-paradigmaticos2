@@ -62,6 +62,7 @@ class Enemigo inherits ObjetoDeJuego{
     var direccion
     method direccion(direccion_){
     	direccion = direccion_
+    	self.image("MatiasFinal"+direccion.vectorAString()+".png")
     }
     method morir(){
     	controlador.retirarEnemigo(self)

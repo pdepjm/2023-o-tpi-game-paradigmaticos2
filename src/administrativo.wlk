@@ -122,7 +122,7 @@ object controlador {
   	
   	method agregarSpawner(tiempo , posicion , vida){
   		numeroDeSpawners += 1
-  		game.onTick(tiempo, "spawner numero " + numeroDeSpawners.toString() , {self.agregarEnemigo(vida, "matias.png", posicion)})	
+  		game.onTick(tiempo, "spawner numero " + numeroDeSpawners.toString() , {self.agregarEnemigo(vida, "MatiasFinalDerecha.png", posicion)})	
   	}
   	method agregarTorre(posicion_,direccion_){
     	const torre = instanciador.instancearTorre(posicion_,direccion_)
