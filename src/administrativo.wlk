@@ -142,7 +142,7 @@ object controlador {
   	method retirarEnemigo(enemigo){
     	game.removeVisual(enemigo)
     	enemigos.remove(enemigo)
-    	self.reducirVida()
+    	
     }
     method moverEnemigos(){enemigos.forEach({enemigo => enemigo.moverse()})}
     method moverBalas(){proyectiles.forEach({bala => bala.moverse()})} 
@@ -169,7 +169,8 @@ object controlador {
 		const proyectil = self.instanciarProyectil(posicion_, direccion_,imagen_)
 		proyectiles.add(proyectil)
 		game.addVisual(proyectil)
-		game.onCollideDo(proyectil, {enemigo => enemigo.impactar(proyectil)})
+		game.onCollideDo(proyectil, {enemigo => enemigo.impactar(proyectil) 
+		})
 	}
 	method removerProjectil(projectil){
 		game.removeVisual(projectil)
