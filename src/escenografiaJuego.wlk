@@ -11,12 +11,6 @@ class Vector inherits Position {//los metodos agregados existen para mover objet
 	method vectorHaciaPunto(punto) = new Vector( x = punto.x() - x, y = punto.y() - y)
 	method multiplicar(factor) = new Vector( x = x * factor , y = y * factor)
 	method sumarVectorEscalado(vector, factor) = self.sumar(vector.multiplicar(factor))
-	method vectorEstaInclinado(vector) = self.vectorHaciaPunto(vector).x().abs() < self.vectorHaciaPunto(vector).y().abs()
-	method puntoEstaArriva(vector) = self.vectorEstaInclinado(vector) and self.vectorHaciaPunto(vector).y() > 0
-	method puntoEstaAbajo(vector) = self.vectorEstaInclinado(vector) and self.vectorHaciaPunto(vector).y() < 0
-	method puntoEstaDerecha(vector) = self.vectorEstaInclinado(vector).negate() and self.vectorHaciaPunto(vector).x() > 0
-	method puntoEstaIzquierda(vector) = self.vectorEstaInclinado(vector).negate() and self.vectorHaciaPunto(vector).x() < 0
-	method distanciaManhattan(punto) = self.vectorHaciaPunto(punto).x().abs() + self.vectorHaciaPunto(punto).y().abs()
 	method rotar90grados() = new Vector(x= -y, y= x)
 	method iguales(punto) = punto.x() == x and punto.y() == y
 	method vectorAString(){
@@ -31,56 +25,54 @@ class Vector inherits Position {//los metodos agregados existen para mover objet
 		}
 		return ""
 	}
-	method productoPunto(vector) = vector.x()*self.x() + vector.y()*self.y()
-	method cuadradoDistancia() = self.productoPunto(self)
-	method productoCruz(vector) = vector.x()*self.y() - self.x()*vector.y()
-	method esSubVectorDe(vector){
-		return self.productoPunto(vector) > 0 and self.cuadradoDistancia()  <= vector.cuadradoDistancia() and self.productoCruz(vector) == 0
-	}
 }
 
 const vectorNulo = new Vector( x=0, y=0)
+const arriba = new Vector(x=0,y=1)
+const abajo = new Vector(x=0,y=-1)
+const derecha = new Vector(x=1,y=0)
+const izquierda = new Vector(x=-1,y=0)
+
 
 class ObjetoDeJuego{//clase creada para ahorrar repetir 
 	var property image
 	var posicion 
 	method position() = posicion
 	method impactar(bala) {}
+	method pisar(objeto){}
 }
 
 class BaldosaFlecha inherits ObjetoDeJuego{//Baldosas que afectan la direccion de los enemigos
-    var property direcciones
-    method direccion() = direcciones.anyOne()
+    var property direccion
+    override method pisar(objeto_){
+    	objeto_.direccion(direccion)
+    	objeto_.mover()
+    }
 }//nota baldosas no deberia eredar dado que podemos hacer que se asigne una imagen en base a su lista de direcciones
 
+class BaldosaFinal inherits ObjetoDeJuego{
+	override method pisar(objeto_){
+		objeto_.morir()
+		controlador.reducirVida()
+	}
+}
+
 class Enemigo inherits ObjetoDeJuego{
-    var vida
-    var pasosDados = 1 //decimos que si esta en una casilla ya dio un paso 
-    var camino
-    method pasosDados() = pasosDados
-    method solicitarDireccion() = camino.darDireccion(pasosDados-1)//tiene que ser -1 por que accedemos a una lista con esta funcion
-    method solicitarCamino() {camino = controlador.asignarCamino(posicion)}
+    var vida 
+    var direccion
+    method direccion(direccion_){
+    	direccion = direccion_
+    }
     method morir(){
     	controlador.retirarEnemigo(self)
     }
     method moverse() {
-    	const direccion = self.solicitarDireccion()
-    	if (direccion.iguales(vectorNulo)) {
-    		controlador.reducirVida()
-    		self.morir()
-    	}
-    	else 
-    	{
-    		posicion = posicion.sumar(direccion)
-    		pasosDados = pasosDados + 1
-    		if (pasosDados > camino.size()) 
-    		{
-    			self.solicitarCamino() 
-    			pasosDados = 1
-    		}
-    	}
+    	controlador.camino().find{obj_ => obj_.position().iguales(posicion)}.pisar(self)
+    	//game.colliders(self).forEach{colider => colider.pisar(self)}
     }
-    
+    method mover(){
+    	posicion = posicion.sumar(direccion)
+    }
     override method impactar(bala) {
     	vida = vida - 1
     	if(vida == 0) self.morir()
@@ -98,9 +90,7 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
     
     method direccion( direccion_) {
     	direccion = direccion_
-    }
-    
-    override method image() = "torre"+direccion.vectorAString()+".png" 
+    } 
     
     method cargarBala(){
     	controlador.agregarPoryectil(posicion.sumar(direccion), direccion,"ball.png")

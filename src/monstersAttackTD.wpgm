@@ -14,18 +14,10 @@ program testeoDelJuego {
  	game.ground("tierraRoja.png")
 	
 	keyboard.enter().onPressDo( {
+		controlador.agregarRecta(instanciador.vector(0,7), instanciador.vector(1,0), 5)
+		controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(5,7)))
 		
-		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(1,0),controlador.vector(0,7),5)
-		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,1),controlador.vector(5,7),6)
-		controlador.agregarCamino([controlador.vector(0,-1)],controlador.vector(1,0),controlador.vector(6,12),3)
-		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,-1),controlador.vector(8,11),9)
-		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(1,0),controlador.vector(9,3),4)
-		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,1),controlador.vector(13,3),8)
-		controlador.agregarCamino([vectorNulo],controlador.vector(1,0),controlador.vector(14,10),5)
-		
-
-		
-		controlador.agregarSpawner(3000, controlador.vector(0,7), 3)
+		controlador.agregarSpawner(3000, instanciador.vector(0,7), 3)
 		game.onTick(800,"moverObjetos",{controlador.moverEnemigos()})
 		game.onTick(250,"moverObjetos",{controlador.moverBalas()})
 		game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
@@ -39,11 +31,14 @@ program testeoDelJuego {
 	    keyboard.c().onPressDo( { cabezal.colocarTorre() } )
 	    keyboard.z().onPressDo( { cabezal.girarTorreSentidoAntiHorario()} )
 	    keyboard.x().onPressDo( { cabezal.girarTorreSentidoHorario()} )
+	    /*
 	    keyboard.r().onPressDo( { 
 	    	if ( cabezal.estoyEncimaDeUnaTorre() ){
 	    		cabezal.cambiarEstado()
 	    		}
 	    	})
+	    	* 
+	    	*/
 	    game.addVisual(cabezal)
 		
 	} )
