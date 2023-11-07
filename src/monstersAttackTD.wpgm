@@ -14,11 +14,25 @@ program testeoDelJuego {
  	game.ground("tierraRoja.png")
 	
 	keyboard.enter().onPressDo( {
-		controlador.agregarRecta(instanciador.vector(0,7), instanciador.vector(1,0), 5)
-		controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(5,7)))
+		controlador.agregarRecta(instanciador.vector(0,6), derecha, 3)//->
+		controlador.agregarBaldosa(instanciador.baldosaInterseccion(instanciador.vector(3,6)))//+
+		controlador.agregarRecta(instanciador.vector(4,6), derecha, 2)//->
+		controlador.agregarRecta(instanciador.vector(6,6), arriba,4)//|
+		controlador.agregarRecta(instanciador.vector(6,10),izquierda,3)//
+		controlador.agregarRecta(instanciador.vector(3,10),abajo,4)
+		controlador.agregarRecta(instanciador.vector(3,5), abajo,2)
+		controlador.agregarRecta(instanciador.vector(3,3),derecha,4)
+		controlador.agregarBaldosa(instanciador.baldosaInterseccion(instanciador.vector(7,3)))
+		controlador.agregarBaldosa(instanciador.baldosa(instanciador.vector(8,3), derecha))
+		controlador.agregarRecta(instanciador.vector(9,3),arriba,4)
+		controlador.agregarRecta(instanciador.vector(9,7),izquierda,2)
+		controlador.agregarRecta(instanciador.vector(7,7),abajo,4)
+		controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(7,2)))
 		
-		controlador.agregarSpawner(3000, instanciador.vector(0,7), 3)
-		game.onTick(800,"moverObjetos",{controlador.moverEnemigos()})
+		//controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(5,10)))
+		
+		controlador.agregarSpawner(3000, instanciador.vector(0,6), 3)
+		game.onTick(600,"moverObjetos",{controlador.moverEnemigos()})
 		game.onTick(250,"moverObjetos",{controlador.moverBalas()})
 		game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
 		game.schedule(60000, {controlador.finDePartida()})

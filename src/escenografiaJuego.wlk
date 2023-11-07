@@ -57,6 +57,12 @@ class BaldosaFinal inherits ObjetoDeJuego{
 	}
 }
 
+class BaldosaInterseccion inherits ObjetoDeJuego{
+	override method pisar(objeto_){
+		objeto_.mover()
+	}
+}
+
 class Enemigo inherits ObjetoDeJuego{
     var vida 
     var direccion
