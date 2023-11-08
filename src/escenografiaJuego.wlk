@@ -40,6 +40,7 @@ class ObjetoDeJuego{//clase creada para ahorrar repetir
 	method position() = posicion
 	method impactar(bala) {}
 	method pisar(objeto){}
+	method alinear(direccion_){}
 }
 
 class BaldosaFlecha inherits ObjetoDeJuego{//Baldosas que afectan la direccion de los enemigos
@@ -48,12 +49,12 @@ class BaldosaFlecha inherits ObjetoDeJuego{//Baldosas que afectan la direccion d
     	objeto_.direccion(direccion)
     	objeto_.mover()
     }
-}//nota baldosas no deberia eredar dado que podemos hacer que se asigne una imagen en base a su lista de direcciones
+}//nota baldosas no deberia eredar dado que podemos hacer que se asigne una imagen en base a su lista de direcciones/
 
 class BaldosaFinal inherits ObjetoDeJuego{
 	override method pisar(objeto_){
 		objeto_.morir()
-		controlador.reducirVida()
+		interfasUsuario.reducirVida()
 	}
 }
 
@@ -62,13 +63,24 @@ class BaldosaInterseccion inherits ObjetoDeJuego{
 		objeto_.mover()
 	}
 }
+class BaldosaBoost inherits BaldosaFlecha{
+	override method pisar(objeto_){
+		objeto_.acender()
+		super(objeto_)
+	}
+}
 
 class Enemigo inherits ObjetoDeJuego{
     var vida 
     var direccion
+    var tipo = "orco"
+    method acender(){
+    	tipo = "Matias"
+    	vida = 5
+    }
     method direccion(direccion_){
     	direccion = direccion_
-    	self.image("MatiasFinal"+direccion.vectorAString()+".png")
+    	self.image(tipo+direccion.vectorAString()+".png")
     }
     method morir(){
     	controlador.retirarEnemigo(self)
@@ -95,10 +107,6 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
     var contador = 1//para asegurar que no disare en el instante que es creada
     var direccion 
     
-    method direccion( direccion_) {
-    	direccion = direccion_
-    } 
-    
     method cargarBala(){
     	controlador.agregarPoryectil(posicion.sumar(direccion), direccion,"ball.png")
     }
@@ -110,6 +118,10 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
     		contador -= 1
     	}
     }
+    override method alinear(direccion_){
+    	direccion = direccion_
+    	image = "torre"+direccion.vectorAString()+".png"
+    }
     method objetivo(nuevoOvjetivo){ objetivo = nuevoOvjetivo }
     method esMiPosicion(posicion_) = posicion.iguales(posicion_)
 }
@@ -117,7 +129,7 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
 class Proyectil inherits ObjetoDeJuego{
 	
 	var direccion
-	var pasosDados = 4
+	var pasosDados = 6
 	
 	method mover(){
 		posicion = posicion.sumar(direccion)
@@ -131,6 +143,7 @@ class Proyectil inherits ObjetoDeJuego{
 		}
 	}
 }
+
 
 //previamente conocido como Matias
 class Villano inherits Enemigo(image = "matias.png" , posicion = new Vector(x = 0, y = 0) , vida = 5){

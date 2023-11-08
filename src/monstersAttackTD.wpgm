@@ -12,6 +12,7 @@ program testeoDelJuego {
  	game.height(15)
  	game.width(20)
  	game.ground("tierraRoja.png")
+	game.title("MonstersAttackTD")
 	
 	keyboard.enter().onPressDo( {
 		controlador.agregarRecta(instanciador.vector(0,6), derecha, 3)//->
@@ -23,12 +24,11 @@ program testeoDelJuego {
 		controlador.agregarRecta(instanciador.vector(3,5), abajo,3)
 		controlador.agregarRecta(instanciador.vector(3,3),derecha,5)
 		
-		controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(7,2)))
+		controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(8,3)))
 		
-		//controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(5,10)))
 		
-		//controlador.agregarSpawner(3000, instanciador.vector(0,6), 3)
-		game.onTick(600,"moverObjetos",{controlador.moverEnemigos()})
+		controlador.agregarSpawner(3000, instanciador.vector(0,6), 3)
+		game.onTick(300,"moverEnemigos",{controlador.moverEnemigos()})
 		game.onTick(250,"moverObjetos",{controlador.moverBalas()})
 		game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
 		game.schedule(60000, {controlador.finDePartida()})
@@ -39,8 +39,8 @@ program testeoDelJuego {
 	    keyboard.left().onPressDo( { cabezal.moverseHaciaIzquierda() } )
 	    keyboard.right().onPressDo( { cabezal.moverseHaciaDerecha() } )
 	    keyboard.c().onPressDo( { cabezal.colocarTorre() } )
-	    keyboard.z().onPressDo( { cabezal.girarTorreSentidoAntiHorario()} )
-	    keyboard.x().onPressDo( { cabezal.girarTorreSentidoHorario()} )
+	    keyboard.z().onPressDo( { cabezal.rotar(1)} )
+	    keyboard.x().onPressDo( { cabezal.rotar(-1)} )
 	    /*
 	    keyboard.r().onPressDo( { 
 	    	if ( cabezal.estoyEncimaDeUnaTorre() ){
