@@ -3,6 +3,11 @@ import escenografiaJuego.*
 import wollok.game.*
 import wollok.game.*
 
+object interfasUsuario{
+	var dineroDelJugador = 200
+	
+}
+
 object cabezal{
     var property image = "cabezalArriba.png"
     var property position = instanciador.vector(3,1) 
@@ -51,8 +56,9 @@ object cabezal{
     		self.redireccionarTorre()
     	}
     }
+    method posicionLibre()= game.colliders(self).any{objeto => objeto.position().iguales(self.position())}.negate()
     method colocarTorre(){
-    	if (game.colliders(self).any{objeto => objeto.position().iguales(self.position())}.negate()){
+    	if (self.posicionLibre()){
     		controlador.agregarTorre(new Vector(x=position.x(),y=position.y()),direccionTorre)
     	}
     }
@@ -78,6 +84,7 @@ object controlador {
     const baldosas = new Set()
     var numeroDeSpawners = 0
     var vidaDelJugador = 3
+    
 //  var property debeDispararDerecha = initialValue
 	
 	
