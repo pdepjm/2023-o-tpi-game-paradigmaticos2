@@ -4,7 +4,7 @@ import wollok.game.*
 import wollok.game.*
 
 object interfasUsuario{
-	var dineroDelJugador = 200
+	var dineroDelJugador = 100
     var vidaDelJugador = 3
 	method reducirVida() {
 		vidaDelJugador -= 1
@@ -14,13 +14,20 @@ object interfasUsuario{
 	}
 	method elJugadorMurio() = vidaDelJugador==0
 	method reducirDineroDelJugador(dinero_) {dineroDelJugador -= dinero_}
+	method puedoComprar(costo_)=dineroDelJugador-costo_ >= 0
 }
 
 object cabezal{
     var property image = "cabezalArriba.png"
-    var property position = instanciador.vector(3,1) 
-	var direccion = new Vector( x =0, y= 1 )
+    var property position = instanciador.vector(10,7)
+	var direccion = arriba
 	method impactar(bala){}
+    method colocarTorre(){
+    	if (self.posicionLibre() and interfasUsuario.puedoComprar(10)){
+    		controlador.agregarTorre(new Vector(x=position.x(),y=position.y()),direccion)
+    		interfasUsuario.reducirDineroDelJugador(10)
+    	}
+    }
     method moverseHaciaArriba(){
     	if ( position.y() < game.height() - 1 ){
     		self.position(position.sumar(arriba))
@@ -41,12 +48,9 @@ object cabezal{
     		self.position(position.sumar(derecha))
     	}
     }
-    
-    
     method redireccionarTorre() {
     	game.colliders(self).forEach{objeto_ => objeto_.alinear(direccion)}
     }
-    
     method rotar(sentido_){ 
     	direccion = direccion.rotar90grados().multiplicar(sentido_)
     	image = "cabezal"+direccion.vectorAString()+".png"
@@ -54,11 +58,6 @@ object cabezal{
     	
     }
     method posicionLibre()= game.colliders(self).any{objeto => objeto.position().iguales(self.position())}.negate()
-    method colocarTorre(){
-    	if (self.posicionLibre()){
-    		controlador.agregarTorre(new Vector(x=position.x(),y=position.y()),direccion)
-    	}
-    }
 }
 
 object instanciador {
@@ -70,6 +69,12 @@ object instanciador {
 	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, image = imagen_, posicion = posicion_,direccion = vectorNulo)
 	method instancearTorre(posicion_,direccion_) = new Torre(objetivo = null, image = "torre" +direccion_.vectorAString()+ ".png", posicion = posicion_,direccion = direccion_)
 }
+
+object audio{
+	const property musicaInicio = game.sound("musicaInicio.mp3") // Musica agregada 
+    const property musicaGameplay = game.sound("musicaGameplay.mp3")
+}
+
 
 //El controlador se encarga de todo el tema de poner y sacar objetos los demas objetos solo le pediran que lo haga por ellos 
 object controlador {
@@ -118,9 +123,9 @@ object controlador {
     method moverEnemigos(){enemigos.forEach({enemigo => enemigo.moverse()})}
     method moverBalas(){proyectiles.forEach({bala => bala.moverse()})} 
   	
-  	method agregarSpawner(tiempo , posicion , vida){
+  	method agregarSpawner(tiempo , posicion , vida, imagen){
   		numeroDeSpawners += 1
-  		game.onTick(tiempo, "spawner numero " + numeroDeSpawners.toString() , {self.agregarEnemigo(vida, "MatiasFinalDerecha.png", posicion)})	
+  		game.onTick(tiempo, "spawner numero " + numeroDeSpawners.toString() , {self.agregarEnemigo(vida, imagen, posicion)})	
   	}
   	method agregarTorre(posicion_,direccion_){
     	const torre = instanciador.instancearTorre(posicion_,direccion_)

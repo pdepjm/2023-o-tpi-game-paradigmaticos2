@@ -14,7 +14,18 @@ program testeoDelJuego {
  	game.ground("tierraRoja.png")
 	game.title("MonstersAttackTD")
 	
-	keyboard.enter().onPressDo( {
+	audio.musicaInicio().shouldLoop(true)
+	audio.musicaGameplay().shouldLoop(true)
+	
+	game.schedule(10, {audio.musicaInicio().play()})
+	
+	keyboard.enter().onPressDo( {//solo no toquen enter mas de una vez ya lo chequee ( si quieren chequear por que solo de a "open Declaration en enter()
+	//Y revisen la libreria game.wlk
+		audio.musicaInicio().stop()
+        
+        audio.musicaGameplay().play() // SI APRETAS ENTER MUCHAS VECES SALE CARTELITO DE ERROR, SACAR ESO Y TAMO JOY
+        
+		controlador.agregarSpawner(3000, instanciador.vector(0,6), 3,"orcoDerecha.png")
 		controlador.agregarRecta(instanciador.vector(0,6), derecha, 3)//->
 		controlador.agregarBaldosa(instanciador.baldosaInterseccion(instanciador.vector(3,6)))//+
 		controlador.agregarRecta(instanciador.vector(4,6), derecha, 2)//->
@@ -22,12 +33,12 @@ program testeoDelJuego {
 		controlador.agregarRecta(instanciador.vector(6,10),izquierda,3)//
 		controlador.agregarRecta(instanciador.vector(3,10),abajo,4)
 		controlador.agregarRecta(instanciador.vector(3,5), abajo,3)
-		controlador.agregarRecta(instanciador.vector(3,3),derecha,5)
+		controlador.agregarRecta(instanciador.vector(3,2),derecha,5)
 		
-		controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(8,3)))
+		controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(8,2)))
 		
 		
-		controlador.agregarSpawner(3000, instanciador.vector(0,6), 3)
+		
 		game.onTick(300,"moverEnemigos",{controlador.moverEnemigos()})
 		game.onTick(250,"moverObjetos",{controlador.moverBalas()})
 		game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
@@ -41,15 +52,7 @@ program testeoDelJuego {
 	    keyboard.c().onPressDo( { cabezal.colocarTorre() } )
 	    keyboard.z().onPressDo( { cabezal.rotar(1)} )
 	    keyboard.x().onPressDo( { cabezal.rotar(-1)} )
-	    /*
-	     * 
-	    keyboard.r().onPressDo( { 
-	    	if ( cabezal.estoyEncimaDeUnaTorre() ){
-	    		cabezal.cambiarEstado()
-	    		}
-	    	})
-	    	* 
-	    	*/
+	    
 	    game.addVisual(cabezal)
 		
 	} )
