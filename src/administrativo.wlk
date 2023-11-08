@@ -3,9 +3,11 @@ import escenografiaJuego.*
 import wollok.game.*
 import wollok.game.*
 
+
 object interfasUsuario{
-	var dineroDelJugador = 100
+	var dineroDelJugador = 40
     var vidaDelJugador = 3
+    method position() = instanciador.vector(15, 14)
 	method reducirVida() {
 		vidaDelJugador -= 1
 		if ( vidaDelJugador == 0 ){//Preguntar por que si pongo < 1 en ves de un valor exacto el juego crashea
@@ -13,8 +15,14 @@ object interfasUsuario{
 		}
 	}
 	method elJugadorMurio() = vidaDelJugador==0
+	method dineroDelJugador(dinero_){
+		dineroDelJugador = dineroDelJugador + dinero_
+	} 
 	method reducirDineroDelJugador(dinero_) {dineroDelJugador -= dinero_}
 	method puedoComprar(costo_)=dineroDelJugador-costo_ >= 0
+	
+	method text() = "Vida: " + vidaDelJugador + "    		$$$ " + dineroDelJugador
+	method textColor() = "#C0C0C0"
 }
 
 object cabezal{

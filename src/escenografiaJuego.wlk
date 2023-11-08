@@ -83,6 +83,7 @@ class Enemigo inherits ObjetoDeJuego{
     	self.image(tipo+direccion.vectorAString()+".png")
     }
     method morir(){
+    	interfasUsuario.dineroDelJugador(10)
     	controlador.retirarEnemigo(self)
     }
     method moverse() {

@@ -39,10 +39,11 @@ program testeoDelJuego {
 		
 		
 		
-		game.onTick(300,"moverEnemigos",{controlador.moverEnemigos()})
+		game.onTick(750,"moverEnemigos",{controlador.moverEnemigos()})
 		game.onTick(250,"moverObjetos",{controlador.moverBalas()})
-		game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
-		game.schedule(60000, {controlador.finDePartida()})
+		game.onTick(1500, "disparoDeTorres",{controlador.abranFuego()})
+		game.schedule(100000, {controlador.finDePartida()})
+		
 		//hariamos un shcelude en el 
 	    //Controles del cabezal
 	    keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
@@ -53,9 +54,12 @@ program testeoDelJuego {
 	    keyboard.z().onPressDo( { cabezal.rotar(1)} )
 	    keyboard.x().onPressDo( { cabezal.rotar(-1)} )
 	    
+	    game.addVisual(interfasUsuario)
 	    game.addVisual(cabezal)
 		
 	} )
 	
     game.start()
 }
+
+
