@@ -72,6 +72,7 @@ object instanciador {
 	method baldosa(posicion_,direccion_) = new BaldosaFlecha(direccion = direccion_, image = "celda.png", posicion = posicion_)
 	method baldosaFinal(posicion_) = new BaldosaFinal(image = "celda.png", posicion = posicion_)
 	method baldosaInterseccion(posicion_) = new BaldosaInterseccion(image = "celda.png", posicion = posicion_)
+	method baldosaCuracion(posicion_,direccion_) = new BaldosaCuracion(direccion = direccion_, image = "baldosaCuracion.png", posicion = posicion_)
 	method vector(x_,y_) = new Vector(x=x_,y=y_)
 	method instanciarProyectil(posicion_,direccion_,imagen_) = new Proyectil(direccion = direccion_, image = imagen_, posicion = posicion_)
 	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, image = imagen_, posicion = posicion_,direccion = vectorNulo)

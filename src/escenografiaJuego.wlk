@@ -70,10 +70,19 @@ class BaldosaBoost inherits BaldosaFlecha{
 	}
 }
 
+class BaldosaCuracion inherits BaldosaFlecha{
+	override method pisar(objeto_){
+		objeto_.curar()
+	}
+}
+
+
+
 class Enemigo inherits ObjetoDeJuego{
     var vida 
     var direccion
     var tipo = "orco"
+    const curacion = 1
     method acender(){
     	tipo = "Matias"
     	vida = 5
@@ -97,6 +106,9 @@ class Enemigo inherits ObjetoDeJuego{
     	vida = vida - 1
     	if(vida == 0) self.morir()
     	bala.destruir()
+    }
+    method curar(){
+    	vida += curacion
     }
 }
 
@@ -150,3 +162,4 @@ class Proyectil inherits ObjetoDeJuego{
 class Villano inherits Enemigo(image = "matias.png" , posicion = new Vector(x = 0, y = 0) , vida = 5){
 
 }
+
