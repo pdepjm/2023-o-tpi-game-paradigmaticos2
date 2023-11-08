@@ -4,7 +4,7 @@ import wollok.game.*
 import wollok.game.*
 
 
-object interfasUsuario{
+object interfazUsuario{
 	var dineroDelJugador = 40
     var vidaDelJugador = 3
     method position() = instanciador.vector(15, 14)
@@ -31,9 +31,9 @@ object cabezal{
 	var direccion = arriba
 	method impactar(bala){}
     method colocarTorre(){
-    	if (self.posicionLibre() and interfasUsuario.puedoComprar(10)){
+    	if (self.posicionLibre() and interfazUsuario.puedoComprar(10)){
     		controlador.agregarTorre(new Vector(x=position.x(),y=position.y()),direccion)
-    		interfasUsuario.reducirDineroDelJugador(10)
+    		interfazUsuario.reducirDineroDelJugador(10)
     	}
     }
     method moverseHaciaArriba(){
@@ -115,7 +115,7 @@ object controlador {
   			{ 
   				self.limpiarPantalla()
   				//cambiaremos por la pantalla de fin
-  				if ( interfasUsuario.elJugadorMurio() ){//En caso de perder
+  				if ( interfazUsuario.elJugadorMurio() ){//En caso de perder
   				
   					game.addVisual(new ObjetoDeJuego(posicion = instanciador.vector(2,0) , image = "perdiste.png" )) 
   					

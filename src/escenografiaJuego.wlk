@@ -54,7 +54,7 @@ class BaldosaFlecha inherits ObjetoDeJuego{//Baldosas que afectan la direccion d
 class BaldosaFinal inherits ObjetoDeJuego{
 	override method pisar(objeto_){
 		objeto_.morir()
-		interfasUsuario.reducirVida()
+		interfazUsuario.reducirVida()
 	}
 }
 
@@ -65,7 +65,7 @@ class BaldosaInterseccion inherits ObjetoDeJuego{
 }
 class BaldosaBoost inherits BaldosaFlecha{
 	override method pisar(objeto_){
-		objeto_.acender()
+		objeto_.ascender()
 		super(objeto_)
 	}
 }
@@ -83,7 +83,8 @@ class Enemigo inherits ObjetoDeJuego{
     var direccion
     var tipo = "orco"
     const curacion = 1
-    method acender(){
+    
+    method ascender(){
     	tipo = "Matias"
     	vida = 5
     }
@@ -92,7 +93,7 @@ class Enemigo inherits ObjetoDeJuego{
     	self.image(tipo+direccion.vectorAString()+".png")
     }
     method morir(){
-    	interfasUsuario.dineroDelJugador(10)
+    	interfazUsuario.dineroDelJugador(10)
     	controlador.retirarEnemigo(self)
     }
     method moverse() {

@@ -53,7 +53,7 @@ program testeoDelJuego {
 	    keyboard.z().onPressDo( { cabezal.rotar(1)} )
 	    keyboard.x().onPressDo( { cabezal.rotar(-1)} )
 	    
-	    game.addVisual(interfasUsuario)
+	    game.addVisual(interfazUsuario)
 	    game.addVisual(cabezal)
 		
 	} )
