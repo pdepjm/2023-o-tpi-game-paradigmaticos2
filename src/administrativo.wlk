@@ -20,7 +20,6 @@ object cabezal{
     var property image = "cabezalArriba.png"
     var property position = instanciador.vector(3,1) 
 	var direccion = new Vector( x =0, y= 1 )
-	
 	method impactar(bala){}
     method moverseHaciaArriba(){
     	if ( position.y() < game.height() - 1 ){

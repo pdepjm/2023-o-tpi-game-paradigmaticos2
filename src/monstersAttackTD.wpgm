@@ -42,6 +42,7 @@ program testeoDelJuego {
 	    keyboard.z().onPressDo( { cabezal.rotar(1)} )
 	    keyboard.x().onPressDo( { cabezal.rotar(-1)} )
 	    /*
+	     * 
 	    keyboard.r().onPressDo( { 
 	    	if ( cabezal.estoyEncimaDeUnaTorre() ){
 	    		cabezal.cambiarEstado()
