@@ -114,8 +114,6 @@ class Enemigo inherits ObjetoDeJuego{
 }
 
 class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche regreso por mas
-    
-    var objetivo
     //var proyectil
     
     var contador = 1//para asegurar que no disare en el instante que es creada
@@ -136,7 +134,6 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
     	direccion = direccion_
     	image = "torre"+direccion.vectorAString()+".png"
     }
-    method objetivo(nuevoOvjetivo){ objetivo = nuevoOvjetivo }
     method esMiPosicion(posicion_) = posicion.iguales(posicion_)
 }
 
