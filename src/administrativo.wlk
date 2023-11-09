@@ -21,7 +21,7 @@ object interfazUsuario{
 	method reducirDineroDelJugador(dinero_) {dineroDelJugador -= dinero_}
 	method puedoComprar(costo_)=dineroDelJugador-costo_ >= 0
 	
-	method text() = "Vida: " + vidaDelJugador + "    		$$$ " + dineroDelJugador
+	method text() = "Vida: " + vidaDelJugador + "      dinero = $" + dineroDelJugador 
 	method textColor() = "#C0C0C0"
 }
 
@@ -82,6 +82,8 @@ object instanciador {
 object audio{
 	const property musicaInicio = game.sound("musicaInicio.mp3") // Musica agregada 
     const property musicaGameplay = game.sound("musicaGameplay.mp3")
+    const property musicaPerder = game.sound("musicaPerder.mp3")
+    const property musicaVictoria = game.sound("musicaVictoria.mp3")
 }
 
 
@@ -117,11 +119,15 @@ object controlador {
   				//cambiaremos por la pantalla de fin
   				if ( interfazUsuario.elJugadorMurio() ){//En caso de perder
   				
-  					game.addVisual(new ObjetoDeJuego(posicion = instanciador.vector(2,0) , image = "perdiste.png" )) 
+  					game.addVisual(new ObjetoDeJuego(posicion = instanciador.vector(2,0) , image = "perdiste.png" ))
+  					audio.musicaGameplay().stop()
+  					audio.musicaPerder().play() 
   					
   				}else {//en caso de ganar
   				
-  					game.addVisual(new ObjetoDeJuego(posicion = instanciador.vector(2,1) , image = "ganaste.png" )) 	
+  					game.addVisual(new ObjetoDeJuego(posicion = instanciador.vector(2,1) , image = "ganaste.png" )) 
+  					audio.musicaGameplay().stop()
+  					audio.musicaVictoria().play()	
   				}
   			}
   		)//retiramos todo objeto de la pantalla

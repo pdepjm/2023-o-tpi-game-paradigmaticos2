@@ -19,8 +19,10 @@ program testeoDelJuego {
 	
 	game.schedule(10, {audio.musicaInicio().play()})
 	
-	keyboard.enter().onPressDo( {//solo no toquen enter mas de una vez ya lo chequee ( si quieren chequear por que solo de a "open Declaration en enter()
-	//Y revisen la libreria game.wlk
+	
+	
+	keyboard.enter().onPressDo( {
+		
 		audio.musicaInicio().stop()
         
         audio.musicaGameplay().play() // SI APRETAS ENTER MUCHAS VECES SALE CARTELITO DE ERROR, SACAR ESO Y TAMO JOY
