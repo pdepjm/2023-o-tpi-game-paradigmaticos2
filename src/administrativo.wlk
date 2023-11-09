@@ -1,4 +1,3 @@
-
 import escenografiaJuego.*
 import wollok.game.*
 import wollok.game.*
@@ -73,10 +72,11 @@ object instanciador {
 	method baldosaFinal(posicion_) = new BaldosaFinal(image = "celda.png", posicion = posicion_)
 	method baldosaInterseccion(posicion_) = new BaldosaInterseccion(image = "celda.png", posicion = posicion_)
 	method baldosaCuracion(posicion_,direccion_) = new BaldosaCuracion(direccion = direccion_, image = "baldosaCuracion.png", posicion = posicion_)
+	method baldosaboost(posicion_,direccion_) = new BaldosaBoost(direccion = direccion_, image = "baldosaMejora.png", posicion = posicion_)
 	method vector(x_,y_) = new Vector(x=x_,y=y_)
 	method instanciarProyectil(posicion_,direccion_,imagen_) = new Proyectil(direccion = direccion_, image = imagen_, posicion = posicion_)
 	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, image = imagen_, posicion = posicion_,direccion = vectorNulo)
-	method instancearTorre(posicion_,direccion_) = new Torre(objetivo = null, image = "torre" +direccion_.vectorAString()+ ".png", posicion = posicion_,direccion = direccion_)
+	method instancearTorre(posicion_,direccion_) = new Torre(image = "torre" +direccion_.vectorAString()+ ".png", posicion = posicion_,direccion = direccion_)
 }
 
 object audio{
@@ -175,5 +175,3 @@ object controlador {
 		proyectiles.remove(projectil)
 	}
 }
-
-

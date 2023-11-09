@@ -6,14 +6,16 @@ import escenografiaJuego.*
  * por ahora solo tiene un codigo de prueba para ver que villano podia moverse
  * el lunes chequeamos entre todos los que no estuvieron
  */
- 
+
+
 program testeoDelJuego {
  
  	game.height(15)
  	game.width(20)
  	game.ground("tierraRoja.png")
 	game.title("MonstersAttackTD")
-	
+	game.addVisual(imagenInicio)
+		
 	audio.musicaInicio().shouldLoop(true)
 	audio.musicaGameplay().shouldLoop(true)
 	
@@ -23,20 +25,21 @@ program testeoDelJuego {
 	
 	keyboard.enter().onPressDo( {
 		
+		game.removeVisual(imagenInicio)
+		
 		audio.musicaInicio().stop()
-        
+   
         audio.musicaGameplay().play() // SI APRETAS ENTER MUCHAS VECES SALE CARTELITO DE ERROR, SACAR ESO Y TAMO JOY
         
 		controlador.agregarSpawner(3000, instanciador.vector(0,6), 3,"orcoDerecha.png")
-		controlador.agregarRecta(instanciador.vector(0,6), derecha, 3)//->
-		controlador.agregarBaldosa(instanciador.baldosaInterseccion(instanciador.vector(3,6)))//+
-		controlador.agregarRecta(instanciador.vector(4,6), derecha, 2)//->
-		controlador.agregarRecta(instanciador.vector(6,6), arriba,4)//|
-		controlador.agregarRecta(instanciador.vector(6,10),izquierda,3)//
-		controlador.agregarRecta(instanciador.vector(3,10),abajo,4)
-		controlador.agregarRecta(instanciador.vector(3,5), abajo,3)
-		controlador.agregarRecta(instanciador.vector(3,2),derecha,5)
-		controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(8,2)))
+		controlador.agregarRecta(instanciador.vector(0,7),instanciador.vector(1,0),9)
+        controlador.agregarRecta(instanciador.vector(9,7),instanciador.vector(0,1),8)
+        controlador.agregarRecta(instanciador.vector(8,1),instanciador.vector(-1,0),6)
+        controlador.agregarRecta(instanciador.vector(2,13),instanciador.vector(0,-1),13)
+        controlador.agregarRecta(instanciador.vector(3,1),instanciador.vector(1,0),12)
+        controlador.agregarRecta(instanciador.vector(10,13),instanciador.vector(1,0),6)
+        controlador.agregarRecta(instanciador.vector(15,13),instanciador.vector(0,-1),9)
+
 		
 		
 		
@@ -62,5 +65,4 @@ program testeoDelJuego {
 	
     game.start()
 }
-
 

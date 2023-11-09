@@ -113,8 +113,7 @@ class Enemigo inherits ObjetoDeJuego{
     }
 }
 
-class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche regreso por mas
-    //var proyectil
+class Torre inherits ObjetoDeJuego{
     
     var contador = 1//para asegurar que no disare en el instante que es creada
     var direccion 
@@ -134,7 +133,8 @@ class Torre inherits ObjetoDeJuego{//de momento la dejo asi mañana a la noche r
     	direccion = direccion_
     	image = "torre"+direccion.vectorAString()+".png"
     }
-    method esMiPosicion(posicion_) = posicion.iguales(posicion_)
+   
+
 }
 
 class Proyectil inherits ObjetoDeJuego{
@@ -155,9 +155,4 @@ class Proyectil inherits ObjetoDeJuego{
 	}
 }
 
-
-//previamente conocido como Matias
-class Villano inherits Enemigo(image = "matias.png" , posicion = new Vector(x = 0, y = 0) , vida = 5){
-
-}
-
+const imagenInicio = new ObjetoDeJuego(posicion = instanciador.vector(0,0) , image = "imagenInicio.jpg" )
