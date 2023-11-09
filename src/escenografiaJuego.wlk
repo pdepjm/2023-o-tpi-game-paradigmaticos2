@@ -102,14 +102,14 @@ class Enemigo inherits ObjetoDeJuego{
     
     method ascender(){
     	tipo = "MatiasFinal"
-    	vida = 5
+    	vida = 3
     }
     method direccion(direccion_){
     	direccion = direccion_
     	self.image(tipo+direccion.vectorAString()+".png")
     }
     method morir(){
-    	interfazUsuario.dineroDelJugador(10)
+    	interfazUsuario.dineroDelJugador(5)
     	controlador.retirarEnemigo(self)
     }
     method moverse() {

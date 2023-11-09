@@ -31,7 +31,7 @@ program testeoDelJuego {
    
         audio.musicaGameplay().play() // SI APRETAS ENTER MUCHAS VECES SALE CARTELITO DE ERROR, SACAR ESO Y TAMO JOY
         
-		controlador.agregarSpawner(3000, instanciador.vector(0,7), 3,"orcoDerecha.png")
+		controlador.agregarSpawner(3000, instanciador.vector(0,7), 1,"orcoDerecha.png")
 		//camino principal
         controlador.agregarRecta(instanciador.vector(0,7),derecha,3)//interseccion
         controlador.agregarRecta(instanciador.vector(4,7),derecha,5)
@@ -60,7 +60,7 @@ program testeoDelJuego {
 		game.onTick(750,"moverEnemigos",{controlador.moverEnemigos()})
 		game.onTick(250,"moverObjetos",{controlador.moverBalas()})
 		game.onTick(1500, "disparoDeTorres",{controlador.abranFuego()})
-		game.schedule(100000, {controlador.finDePartida()})
+		game.schedule(80000, {controlador.finDePartida()})
 		
 		//hariamos un shcelude en el 
 	    //Controles del cabezal

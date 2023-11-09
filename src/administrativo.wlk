@@ -4,9 +4,9 @@ import wollok.game.*
 
 
 object interfazUsuario{
-	var dineroDelJugador = 80
+	var dineroDelJugador = 10
     var vidaDelJugador = 3
-    method position() = instanciador.vector(15, 14)
+    method position() = instanciador.vector(17, 14)
 	method reducirVida() {
 		vidaDelJugador -= 1
 		if ( vidaDelJugador == 0 ){//Preguntar por que si pongo < 1 en ves de un valor exacto el juego crashea
