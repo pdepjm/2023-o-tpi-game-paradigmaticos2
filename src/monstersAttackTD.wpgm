@@ -6,30 +6,62 @@ import escenografiaJuego.*
  * por ahora solo tiene un codigo de prueba para ver que villano podia moverse
  * el lunes chequeamos entre todos los que no estuvieron
  */
- 
+
+
 program testeoDelJuego {
  
  	game.height(15)
  	game.width(20)
  	game.ground("tierraRoja.png")
+	game.title("MonstersAttackTD")
+	game.addVisual(imagenInicio)
+		
+	audio.musicaInicio().shouldLoop(true)
+	audio.musicaGameplay().shouldLoop(true)
+	
+	game.schedule(10, {audio.musicaInicio().play()})
+	
+	
 	
 	keyboard.enter().onPressDo( {
 		
-		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(1,0),controlador.vector(0,7),5)
-		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,1),controlador.vector(5,7),6)
-		controlador.agregarCamino([controlador.vector(0,-1)],controlador.vector(1,0),controlador.vector(6,12),3)
-		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,-1),controlador.vector(8,11),9)
-		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(1,0),controlador.vector(9,3),4)
-		controlador.agregarCamino([controlador.vector(1,0)],controlador.vector(0,1),controlador.vector(13,3),8)
-		controlador.agregarCamino([vectorNulo],controlador.vector(1,0),controlador.vector(14,10),5)
+		game.removeVisual(imagenInicio)
 		
-
+		audio.musicaInicio().stop()
+   
+        audio.musicaGameplay().play() // SI APRETAS ENTER MUCHAS VECES SALE CARTELITO DE ERROR, SACAR ESO Y TAMO JOY
+        
+		controlador.agregarSpawner(3000, instanciador.vector(0,7), 3,"orcoDerecha.png")
+		//camino principal
+        controlador.agregarRecta(instanciador.vector(0,7),derecha,3)//interseccion
+        controlador.agregarRecta(instanciador.vector(4,7),derecha,5)
+        controlador.agregarRecta(instanciador.vector(9,7),arriba,6)//bifurcacion
+        controlador.agregarRecta(instanciador.vector(8,13),izquierda,2)
+        controlador.agregarBaldosa(instanciador.baldosaboost(instanciador.vector(6,13), izquierda))
+        controlador.agregarRecta(instanciador.vector(5,13),izquierda,2)
+        controlador.agregarRecta(instanciador.vector(3,13),abajo,6)
+        controlador.agregarRecta(instanciador.vector(3,6),abajo,5)
+        controlador.agregarRecta(instanciador.vector(3,1),derecha,12)
+        //camino secundario
+        controlador.agregarRecta(instanciador.vector(10,13),derecha,1)
+        controlador.agregarBaldosa(instanciador.baldosaCuracion(instanciador.vector(11,13), derecha))
+        controlador.agregarRecta(instanciador.vector(12,13),derecha,3)
+        controlador.agregarRecta(instanciador.vector(15,13),abajo,9)
+        
+        controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(15,1)))
+        controlador.agregarBaldosa(instanciador.baldosaFinal(instanciador.vector(15,4)))
+        controlador.agregarBaldosa(instanciador.baldosaInterseccion(instanciador.vector(3,7)))
+        controlador.agregarBaldosa(instanciador.baldosaBifurcacion("celda.png", instanciador.vector(9,13), [derecha,izquierda]))
+        
+        
+		game.addVisual(baseMilitar)
+	
 		
-		controlador.agregarSpawner(3000, controlador.vector(0,7), 3)
-		game.onTick(800,"moverObjetos",{controlador.moverEnemigos()})
+		game.onTick(750,"moverEnemigos",{controlador.moverEnemigos()})
 		game.onTick(250,"moverObjetos",{controlador.moverBalas()})
-		game.onTick(2000, "disparoDeTorres",{controlador.abranFuego()})
-		game.schedule(60000, {controlador.finDePartida()})
+		game.onTick(1500, "disparoDeTorres",{controlador.abranFuego()})
+		game.schedule(100000, {controlador.finDePartida()})
+		
 		//hariamos un shcelude en el 
 	    //Controles del cabezal
 	    keyboard.up().onPressDo( { cabezal.moverseHaciaArriba() } )
@@ -37,16 +69,14 @@ program testeoDelJuego {
 	    keyboard.left().onPressDo( { cabezal.moverseHaciaIzquierda() } )
 	    keyboard.right().onPressDo( { cabezal.moverseHaciaDerecha() } )
 	    keyboard.c().onPressDo( { cabezal.colocarTorre() } )
-	    keyboard.z().onPressDo( { cabezal.girarTorreSentidoAntiHorario()} )
-	    keyboard.x().onPressDo( { cabezal.girarTorreSentidoHorario()} )
-	    keyboard.r().onPressDo( { 
-	    	if ( cabezal.estoyEncimaDeUnaTorre() ){
-	    		cabezal.cambiarEstado()
-	    		}
-	    	})
+	    keyboard.z().onPressDo( { cabezal.rotar(1)} )
+	    keyboard.x().onPressDo( { cabezal.rotar(-1)} )
+	    
+	    game.addVisual(interfazUsuario)
 	    game.addVisual(cabezal)
 		
 	} )
 	
     game.start()
 }
+
