@@ -4,7 +4,7 @@ import wollok.game.*
 
 
 object interfazUsuario{
-	var dineroDelJugador = 40
+	var dineroDelJugador = 80
     var vidaDelJugador = 3
     method position() = instanciador.vector(15, 14)
 	method reducirVida() {
