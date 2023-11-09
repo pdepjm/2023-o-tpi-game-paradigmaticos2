@@ -103,10 +103,7 @@ object controlador {
 	method abranFuego() { torres.forEach{torre => torre.disparar()} }
   	method limpiarPantalla() {
   		game.clear()//eliminamos todo de la pantalla
-  		enemigos.clear()
-  		proyectiles.clear()
-  		torres.clear()
-  		baldosas.clear()
+  		
   	}
   	method finDePartida(){
   		game.removeTickEvent("moverObjetos")
