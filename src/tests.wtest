@@ -1,6 +1,7 @@
+import administrativo.*
+import wollok.game.*
+import escenografiaJuego.*
 
-test "testX" {
 
-	assert.that(true)
 
-}
+  
