@@ -130,9 +130,11 @@ object controlador {
   			}
   		)//retiramos todo objeto de la pantalla
   	}
+
   	
   	
 	method camino() = baldosas
+
     method moverEnemigos(){enemigos.forEach({enemigo => enemigo.moverse()})}
     method moverBalas(){proyectiles.forEach({bala => bala.moverse()})} 
   	
@@ -165,12 +167,7 @@ object controlador {
 		const proyectil = instanciador.instanciarProyectil(posicion_, direccion_,imagen_)
 		proyectiles.add(proyectil)
 		game.addVisual(proyectil)
-		game.onCollideDo(proyectil, {enemigo => enemigo.impactar(proyectil)})
-	}	
-  	method retirarEnemigo(enemigo){
-    	game.removeVisual(enemigo)
-    	enemigos.remove(enemigo)
-    }
+
 	method removerProjectil(projectil){
 		game.removeVisual(projectil)
 		proyectiles.remove(projectil)
