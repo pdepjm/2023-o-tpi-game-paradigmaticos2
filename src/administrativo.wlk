@@ -77,6 +77,7 @@ object instanciador {
 	method instanciarProyectil(posicion_,direccion_,imagen_) = new Proyectil(direccion = direccion_, image = imagen_, posicion = posicion_)
 	method instanciarEnemigo(vida_,imagen_,posicion_) = new Enemigo(vida = vida_, image = imagen_, posicion = posicion_,direccion = vectorNulo)
 	method instancearTorre(posicion_,direccion_) = new Torre(image = "torre" +direccion_.vectorAString()+ ".png", posicion = posicion_,direccion = direccion_)
+	method baldosaBifurcacion(imagen_,posicion_,direcciones_) = new BaldosaBifurcacion(image = imagen_, posicion = posicion_ , direcciones = direcciones_)
 }
 
 object audio{
@@ -174,4 +175,5 @@ object controlador {
 		game.removeVisual(projectil)
 		proyectiles.remove(projectil)
 	}
+	
 }

@@ -69,15 +69,31 @@ class BaldosaBoost inherits BaldosaFlecha{
 		super(objeto_)
 	}
 }
+class BaldosaBifurcacion inherits ObjetoDeJuego{
+	var direcciones
+	override method pisar(objeto_){
+		objeto_.direccion(direcciones.anyOne())
+		objeto_.mover()
+	}
+}
+
+class EfectoCuracion inherits ObjetoDeJuego{
+	
+}
 
 class BaldosaCuracion inherits BaldosaFlecha{
 	override method pisar(objeto_){
 		objeto_.curar()
+		const efecto = new EfectoCuracion(image = "efectoCuracion.png", posicion = posicion.sumar(instanciador.vector(-1,-1)))
+		game.addVisual(efecto)
+		game.schedule(800,{game.removeVisual(efecto)})
+		super(objeto_)
 	}
 }
-
-
-
+object baseMilitar{
+    var property image = "baseMilitar.png"
+    method position() = instanciador.vector(15, 0)
+}
 class Enemigo inherits ObjetoDeJuego{
     var vida 
     var direccion
@@ -85,7 +101,7 @@ class Enemigo inherits ObjetoDeJuego{
     const curacion = 1
     
     method ascender(){
-    	tipo = "Matias"
+    	tipo = "MatiasFinal"
     	vida = 5
     }
     method direccion(direccion_){
@@ -119,7 +135,7 @@ class Torre inherits ObjetoDeJuego{
     var direccion 
     
     method cargarBala(){
-    	controlador.agregarPoryectil(posicion.sumar(direccion), direccion,"ball.png")
+    	controlador.agregarPoryectil(posicion.sumar(direccion), direccion,"bullet.png")
     }
     method disparar(){
     	if ( contador <= 0 ){
@@ -133,12 +149,9 @@ class Torre inherits ObjetoDeJuego{
     	direccion = direccion_
     	image = "torre"+direccion.vectorAString()+".png"
     }
-   
-
 }
 
 class Proyectil inherits ObjetoDeJuego{
-	
 	var direccion
 	var pasosDados = 6
 	
